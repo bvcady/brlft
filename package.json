@@ -1,0 +1,37 @@
+{
+  "name": "brlft",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "lint": "eslint --fix"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/next": "^9.0.0",
+    "@types/react": "^18.0.28",
+    "@types/react-dom": "^18.0.11",
+    "@types/styled-components": "^5.1.26",
+    "@typescript-eslint/eslint-plugin": "^5.55.0",
+    "@typescript-eslint/parser": "^5.55.0",
+    "eslint-config-airbnb": "^19.0.4",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-import": "^2.27.5",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "eslint-plugin-react": "^7.32.2",
+    "next": "^13.2.4",
+    "react": "^18.2.0",
+    "react-device-detect": "^2.2.3",
+    "react-dom": "^18.2.0",
+    "styled-components": "^5.3.9",
+    "typescript": "^4.9.5"
+  },
+  "devDependencies": {
+    "@svgr/webpack": "^6.5.1",
+    "@types/node": "18.15.3",
+    "eslint": "^8.36.0",
+    "prettier": "^2.8.4"
+  }
+}
