@@ -1,5 +1,4 @@
 import { Navigation } from "../components/navigation/Navigation";
-import { Item } from "../layout/Item";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 
 export const HomeScreen = () => {
@@ -7,7 +6,7 @@ export const HomeScreen = () => {
   return (
     <ScreenWrapper>
       <Navigation />
-      <div>
+      <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
         <h1
           style={{
             filter: displace,
@@ -15,13 +14,7 @@ export const HomeScreen = () => {
         >
           Bob <i>&</i> Lis<i>a</i>
         </h1>
-        {/* <h1
-          style={{
-            filter: displace,
-          }}
-        >
-          Looking like a latte
-        </h1> */}
+        <h2>4 Augustus 2023</h2>
         <p>
           Lieve vrienden en familie,
           <br />

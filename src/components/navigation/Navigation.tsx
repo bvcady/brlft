@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
@@ -20,9 +21,13 @@ const Wrapper = styled.nav`
 
   /* max-width: 100%; */
   z-index: 100;
+
+  button {
+    cursor: pointer;
+  }
 `;
 
-const Logo = styled.a`
+const Logo = styled.button`
   font-size: 1.5rem;
   filter: url(#displacementFilter) blur(0.5px);
   text-decoration: none;
@@ -33,9 +38,6 @@ const MenuItems = styled.div`
   display: flex;
   gap: 1rem;
   margin-left: auto;
-  a {
-    text-transform: uppercase;
-  }
 `;
 
 const Hamburger = styled.div`
@@ -71,16 +73,40 @@ export const Navigation = ({ children }: INavigation) => {
     }
   }, []);
 
+  const router = useRouter();
+
   return (
     <Wrapper>
-      <Logo href="/">
+      <Logo type="button" onClick={() => router.push("/")}>
         Brlf<i>t</i>
       </Logo>
       {!hamburger ? (
         <MenuItems>
-          <a href="/">RSVP</a>
-          <a href="/">Locatie</a>
-          <a href="/">Eten</a>
+          <button
+            type="button"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            RSVP
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            RSVP
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              router.push("/");
+            }}
+          >
+            RSVP
+          </button>
+
           {children}
         </MenuItems>
       ) : null}
