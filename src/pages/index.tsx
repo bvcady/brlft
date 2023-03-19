@@ -1,3 +1,6 @@
+import { useRouter } from "next/router";
+import { useEffect, useState } from "react";
+
 import { PageLayout } from "../layout/PageLayout";
 import { HomeScreen } from "../screens/HomeScreen";
 
@@ -12,13 +15,12 @@ const Home = () => {
       ).json(),
     );
   };
-  return (
-    <PageLayout>
-      <HomeScreen />
-      <button type="button" onClick={handleAddMockGuest}>
-        Post
-      </button>
-    </PageLayout>
-  );
+
+  return <HomeScreen />;
 };
 export default Home;
+//  {
+//    /* <button type="button" onClick={handleAddMockGuest}>
+//       Post
+//     </button> */
+//  }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { isMobile } from "react-device-detect";
 import { ThemeProvider } from "styled-components";
+import { PageLayout } from "../layout/PageLayout";
 import { GlobalStyles } from "../styles/GlobalStyles";
 import { theme } from "../styles/theme";
 
@@ -26,9 +27,9 @@ function MyApp({ Component, pageProps }) {
               numOctaves="8"
               result="turbulence"
             >
-              {!animated ? (
+              {/* {!animated ? (
                 <animate attributeName="seed" from="1" to="10" dur="10s" repeatCount="indefinite" />
-              ) : null}
+              ) : null} */}
             </feTurbulence>
             <feDisplacementMap
               in2="turbulence"
@@ -41,7 +42,9 @@ function MyApp({ Component, pageProps }) {
         </defs>
       </svg>
       <GlobalStyles />
-      <Component {...pageProps} />
+      <PageLayout>
+        <Component {...pageProps} />
+      </PageLayout>
     </ThemeProvider>
   );
 }
