@@ -27,17 +27,19 @@ function MyApp({ Component, pageProps }) {
               numOctaves="8"
               result="turbulence"
             >
-              {/* {!animated ? (
-                <animate attributeName="seed" from="1" to="10" dur="10s" repeatCount="indefinite" />
-              ) : null} */}
+              {!animated ? (
+                <animate attributeName="seed" from="0" to="5" dur="1s" repeatCount="indefinite" />
+              ) : null}
             </feTurbulence>
             <feDisplacementMap
+              id="dm"
               in2="turbulence"
               in="SourceGraphic"
               scale="4"
               xChannelSelector="R"
               yChannelSelector="G"
             />
+            <feGaussianBlur stdDeviation={1} />
           </filter>
         </defs>
       </svg>

@@ -1,11 +1,48 @@
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
+import { theme } from "../styles/theme";
 
 const CeremonyPage = () => {
-  const displace = `url(#displacementFilter) blur(0.5px)`;
+  const displace = `url(#displacementFilter)`;
   return (
     <PageLayout>
       <ScreenWrapper>
+        <div
+          style={{
+            position: "relative",
+            padding: "2rem",
+            display: "flex",
+            gap: "2rem",
+            alignItems: "center",
+            width: "fit-content",
+          }}
+        >
+          <img
+            width="400px"
+            src="images/bob-en-lisa.svg"
+            alt="Illustratie van Lisa en Bob"
+            style={{ padding: "1rem" }}
+          />
+
+          <div
+            style={{
+              position: "absolute",
+              inset: "0 0 7.5rem 0",
+              borderRadius: "5rem",
+              filter: "url(#displacementFilter)",
+              zIndex: "-1",
+              backgroundColor: theme.colors.accent.default,
+            }}
+          />
+        </div>
+        <h1
+          style={{
+            fontSize: "8rem",
+          }}
+        >
+          Bob <i>&</i> Lis<i>a</i>
+        </h1>
+        <h2>4 Augustus 2023</h2>
         <div
           style={{
             display: "flex",
@@ -13,14 +50,6 @@ const CeremonyPage = () => {
             gap: "2rem",
           }}
         >
-          <h1
-            style={{
-              filter: displace,
-            }}
-          >
-            Bob <i>&</i> Lis<i>a</i>
-          </h1>
-          <h2>4 Augustus 2023</h2>
           <p>
             Lieve vrienden en familie,
             <br />
@@ -57,7 +86,6 @@ const CeremonyPage = () => {
             backgroundPosition: "0px 60%",
             backgroundRepeat: "no-repeat",
             backgroundSize: "cover",
-            filter: "url(#displacementFilter) blur(0.5px)",
           }}
         />
       </ScreenWrapper>

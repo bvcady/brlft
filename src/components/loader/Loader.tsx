@@ -34,9 +34,11 @@ export const Loader = () => {
   return (
     <div
       style={{
-        filter: "url(#displacementFilter) blur(0.5px)",
         margin: "30vh auto",
         width: "66%",
+        overflow: "visible",
+        filter: "url(#displacementFilter)",
+        height: "3rem",
       }}
     >
       <div
