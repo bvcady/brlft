@@ -15,14 +15,15 @@ const CeremonyPage = () => {
             gap: "2rem",
             alignItems: "center",
             width: "fit-content",
+            maxWidth: "80vw",
             overflow: "visible",
           }}
         >
           <img
-            width="400px"
+            width="100%"
             src="images/bob-en-lisa.svg"
             alt="Illustratie van Lisa en Bob"
-            style={{ padding: "1rem", maxWidth: "90vw" }}
+            style={{ padding: "1rem" }}
           />
           <div
             style={{

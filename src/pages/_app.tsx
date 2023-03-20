@@ -27,9 +27,7 @@ function MyApp({ Component, pageProps }) {
               numOctaves="8"
               result="turbulence"
             >
-              {!animated ? (
-                <animate attributeName="seed" from="0" to="5" dur="1s" repeatCount="indefinite" />
-              ) : null}
+              <animate attributeName="seed" from="0" to="5" dur="1s" repeatCount="indefinite" />
             </feTurbulence>
             <feDisplacementMap
               id="dm"
