@@ -22,9 +22,8 @@ const CeremonyPage = () => {
             width="400px"
             src="images/bob-en-lisa.svg"
             alt="Illustratie van Lisa en Bob"
-            style={{ padding: "1rem" }}
+            style={{ padding: "1rem", maxWidth: "90vw" }}
           />
-
           <div
             style={{
               position: "absolute",
