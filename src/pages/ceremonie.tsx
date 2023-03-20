@@ -15,6 +15,7 @@ const CeremonyPage = () => {
             gap: "2rem",
             alignItems: "center",
             width: "fit-content",
+            overflow: "visible",
           }}
         >
           <img
@@ -28,16 +29,19 @@ const CeremonyPage = () => {
             style={{
               position: "absolute",
               inset: "0 0 7.5rem 0",
-              borderRadius: "5rem",
+              borderRadius: "9rem 5rem 6rem 3rem",
               filter: "url(#displacementFilter)",
               zIndex: "-1",
+              transform: "rotate(-4deg)",
               backgroundColor: theme.colors.accent.default,
             }}
           />
         </div>
         <h1
           style={{
+            filter: "url(#displacementFilter)",
             fontSize: "8rem",
+            color: theme.colors.secondary.default,
           }}
         >
           Bob <i>&</i> Lis<i>a</i>
