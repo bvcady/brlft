@@ -28,20 +28,19 @@ const Wrapper = styled.nav`
 `;
 
 const Logo = styled.button`
+  /* filter: url(#displacementFilter); */
   font-size: 1.5rem;
-  filter: url(#displacementFilter) blur(0.5px);
   text-decoration: none;
+  text-transform: none;
 `;
-const MenuItems = styled.div`
-  filter: url(#displacementFilter) blur(0.5px);
 
+const MenuItems = styled.div`
   display: flex;
   gap: 1rem;
   margin-left: auto;
 `;
 
 const Hamburger = styled.div`
-  filter: url(#displacementFilter) blur(0.5px);
   margin-left: auto;
   font-weight: 900;
 
@@ -56,7 +55,8 @@ const Hamburger = styled.div`
 const BG = styled.div`
   background-color: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(3px);
-  filter: url(#displacementFilter) blur(0.5px);
+  filter: url(#displacementFilter);
+
   inset: 0 0 0 0;
   position: absolute;
   border-radius: 0.25rem;

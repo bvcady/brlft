@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   width: 100vw;
   height: 100vh;
   inset: 0 0 0 0;
-  filter: url(#displacementFilter) blur(0.5px);
 `;
 
 export const RainWithUmbrella = () => {
@@ -40,7 +39,6 @@ export const RainWithUmbrella = () => {
     <Wrapper>
       <svg style={{ width: windowSize.width, height: windowSize.height + 100 }}>
         <path
-          // filter="url(#displacementFilter) blur(0.5px)"
           d={rain}
           stroke="#0467B2"
           strokeWidth={3}
