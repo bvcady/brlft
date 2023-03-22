@@ -1,16 +1,15 @@
-import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import { theme } from "../../styles/theme";
 
-export const Loader = () => {
+interface ILoader {
+  onFinished?: (input: string) => void;
+  type?: string;
+}
+
+export const Loader = ({ onFinished, type }: ILoader) => {
   const [percentage, setPercentage] = useState(0);
 
   const percentageInterval = useRef();
-
-  const router = useRouter();
-
-  const { query } = router;
-  const { type } = query;
 
   useEffect(() => {
     // @ts-ignore
@@ -19,6 +18,7 @@ export const Loader = () => {
         setPercentage((prev) => (prev + 33 < 100 ? prev + Math.random() * 33 : 100));
       }
     }, 500);
+
     return () => clearInterval(percentageInterval.current);
   }, []);
 
@@ -26,7 +26,7 @@ export const Loader = () => {
     if (percentage >= 100) {
       clearInterval(percentageInterval.current);
       if (type) {
-        router.push(`/${type}`);
+        onFinished?.(type);
       }
     }
   }, [percentage]);
@@ -34,19 +34,24 @@ export const Loader = () => {
   return (
     <div
       style={{
-        margin: "30vh auto",
-        width: "66%",
+        pointerEvents: "none",
+        margin: "3rem auto",
+        width: "clamp(200px, 350px, 66%)",
         overflow: "visible",
         filter: "url(#displacementFilter)",
-        height: "3rem",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        gap: "1rem",
+        userSelect: "none",
       }}
     >
       <div
         style={{
           width: "100%",
-          height: "0.66rem",
+          height: "0.5rem",
           borderRadius: "1rem",
-          background: "rgba(200, 200, 200, 0.2)",
+          background: theme.colors.main.default,
           overflow: "hidden",
         }}
       >

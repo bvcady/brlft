@@ -2,6 +2,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
+import { useLocalStorage } from "../../utils/hooks/useLocalStorage";
 
 interface INavigation {
   children?: ReactNode;
@@ -16,9 +17,7 @@ const Wrapper = styled.nav`
   padding: 0.5rem 1rem;
   position: fixed;
   top: 2rem;
-  right: 2rem;
-  left: 2rem;
-
+  width: clamp(100px, 1200px, 90vw);
   /* max-width: 100%; */
   z-index: 100;
 
@@ -32,6 +31,7 @@ const Logo = styled.button`
   font-size: 1.5rem;
   text-decoration: none;
   text-transform: none;
+  color: ${({ theme }) => theme.colors.secondary.default};
 `;
 
 const MenuItems = styled.div`
@@ -66,6 +66,8 @@ export const Navigation = ({ children }: INavigation) => {
   const [hamburger, toggleHamburger] = useState(false);
   const [mobileDevice, toggleMobileDevice] = useState(true);
 
+  const [type, setType] = useLocalStorage("brlft-type", "");
+
   useEffect(() => {
     if (isMobile) {
       toggleHamburger(true);
@@ -85,28 +87,20 @@ export const Navigation = ({ children }: INavigation) => {
           <button
             type="button"
             onClick={() => {
+              setType("");
               router.push("/");
             }}
           >
-            RSVP
+            Log Out
           </button>
           <button
             type="button"
             onClick={() => {
-              router.push("/");
+              router.push("/aanmelden");
             }}
           >
-            RSVP
+            Aanmelden
           </button>
-          <button
-            type="button"
-            onClick={() => {
-              router.push("/");
-            }}
-          >
-            RSVP
-          </button>
-
           {children}
         </MenuItems>
       ) : null}

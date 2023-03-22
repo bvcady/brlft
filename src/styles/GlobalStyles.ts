@@ -19,14 +19,16 @@ h1, h2, h3, h4, h5 {
 
 a, button {
   font-weight: 900;
-  color: black;
+  color: ${({ theme }) => theme.colors.text.default};
   font-family: Kocha Clean;
   margin: 0;  
-	text-decoration: underline;
+	padding: 0;
+  text-decoration: underline;
 	text-transform: uppercase;
 	border: none;
 	background-color: transparent;
 	outline: none;
+
 
   :hover {
     transform: translateY(-0.125rem);
