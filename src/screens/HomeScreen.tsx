@@ -78,6 +78,7 @@ export const HomeScreen = () => {
             if (storedType) {
               return handleNavigate();
             }
+            return null;
           }}
         />
       ) : null}

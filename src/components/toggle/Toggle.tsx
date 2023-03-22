@@ -38,7 +38,6 @@ interface IButtonGroup {
 }
 
 export const Toggle = ({ options }: IButtonGroup) => {
-  const test = "";
   return (
     <Wrapper>
       {options?.length ? (

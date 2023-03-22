@@ -8,7 +8,6 @@ interface IItem {
 
 const Wrapper = styled.section`
   width: 100%;
-  /* height: fit-content; */
 `;
 
-export const Item = ({ style = {}, children }) => <Wrapper {...{ style }}>{children}</Wrapper>;
+export const Item = ({ style, children }: IItem) => <Wrapper {...{ style }}>{children}</Wrapper>;

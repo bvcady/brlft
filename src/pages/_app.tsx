@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
-import { isMobile } from "react-device-detect";
 import { ThemeProvider } from "styled-components";
 import { PageLayout } from "../layout/PageLayout";
 import { GlobalStyles } from "../styles/GlobalStyles";
