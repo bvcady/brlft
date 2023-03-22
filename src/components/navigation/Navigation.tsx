@@ -21,6 +21,11 @@ const Wrapper = styled.nav`
   /* max-width: 100%; */
   z-index: 100;
 
+  p {
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+  }
   button {
     cursor: pointer;
   }
@@ -67,6 +72,7 @@ export const Navigation = ({ children }: INavigation) => {
   const [mobileDevice, toggleMobileDevice] = useState(true);
 
   const [type, setType] = useLocalStorage("brlft-type", "");
+  const [user, setUser] = useLocalStorage("brlft-user", "");
 
   useEffect(() => {
     if (isMobile) {
@@ -75,6 +81,10 @@ export const Navigation = ({ children }: INavigation) => {
     }
   }, []);
 
+  useEffect(() => {
+    console.log("user changed", user);
+  }, [user]);
+
   const router = useRouter();
 
   return (
@@ -82,12 +92,14 @@ export const Navigation = ({ children }: INavigation) => {
       <Logo type="button" onClick={() => router.push("/")}>
         Brlf<i>t</i>
       </Logo>
+      {user ? <p>Hallo {user.name}</p> : null}
       {!hamburger ? (
         <MenuItems>
           <button
             type="button"
             onClick={() => {
               setType("");
+              setUser("");
               router.push("/");
             }}
           >

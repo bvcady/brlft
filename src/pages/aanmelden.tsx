@@ -1,5 +1,6 @@
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { RSVPForm } from "../components/forms/rsvp/RSVPForm";
 import { Item } from "../layout/Item";
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
@@ -56,8 +57,22 @@ const CeremonyPage = () => {
             <img
               src="images/bob-en-lisa.png"
               alt="Illustratie van Lisa en Bob"
-              style={{ padding: "1rem", width: "100%", height: "100%" }}
+              style={{ padding: "1rem", width: "100%", height: "100%", paddingBottom: "0" }}
             />
+            <h1
+              style={{
+                position: "absolute",
+                paddingLeft: "1rem",
+                left: "15%",
+                right: "15%",
+                bottom: "20%",
+                textAlign: "center",
+                filter: "url(#displacementFilter) blur(0.5px)",
+                color: theme.colors.secondary.default,
+              }}
+            >
+              Lis<i>a</i> <i>&</i> Bob
+            </h1>
             <div
               style={{
                 position: "absolute",
@@ -71,15 +86,6 @@ const CeremonyPage = () => {
             />
           </div>
           <Item>
-            <h1
-              style={{
-                filter: "url(#displacementFilter)",
-                fontSize: "8rem",
-                color: theme.colors.secondary.default,
-              }}
-            >
-              Bob <i>&</i> Lis<i>a</i>
-            </h1>
             <h2>4 Augustus 2023</h2>
             <div
               style={{
@@ -113,7 +119,7 @@ const CeremonyPage = () => {
                 onvergetelijke dag te creëren op onze trouwdag!
               </p>
             </div>
-            <div
+            {/* <div
               style={{
                 width: "100%",
                 height: 350,
@@ -125,7 +131,10 @@ const CeremonyPage = () => {
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
               }}
-            />
+            /> */}
+          </Item>
+          <Item full>
+            <RSVPForm type={type} />
           </Item>
         </ScreenWrapper>
       ) : null}
