@@ -1,5 +1,5 @@
 import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Item } from "../layout/Item";
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
@@ -9,17 +9,21 @@ import { useLocalStorage } from "../utils/hooks/useLocalStorage";
 const CeremonyPage = () => {
   const router = useRouter();
 
-  const [type] = useLocalStorage("brlft-type", "");
+  const [type = ""] = useLocalStorage("brlft-type", "");
+
+  const [contentVisible, toggleContentVisible] = useState(false);
 
   useEffect(() => {
     if (type !== "avond" && type !== "dag") {
       router.push("/");
+    } else {
+      toggleContentVisible(true);
     }
   }, [type]);
 
   return (
     <PageLayout>
-      {type ? (
+      {contentVisible ? (
         <ScreenWrapper>
           <div
             style={{
@@ -29,11 +33,26 @@ const CeremonyPage = () => {
               display: "flex",
               gap: "2rem",
               alignItems: "center",
-              width: "clamp(250px, 450px, 90vw)",
+              width: "clamp(250px, 400px, 90vw)",
               maxWidth: "80vw",
               overflow: "visible",
+              pointerEvents: "none",
+              userSelect: "none",
             }}
           >
+            <span
+              style={{
+                position: "absolute",
+                top: "15%",
+                left: 0,
+                right: 0,
+                textAlign: "center",
+                fontSize: "3.25rem",
+                filter: "url(#displacementFilter) blur(0.5px)",
+              }}
+            >
+              Ja!
+            </span>
             <img
               src="images/bob-en-lisa.png"
               alt="Illustratie van Lisa en Bob"

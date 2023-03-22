@@ -11,9 +11,18 @@ export const GlobalStyles = createGlobalStyle`
   src: url("fonts/Kocha-Clean.otf") format("opentype");
 }
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5, span{
 	font-family: Kocha Clean;
 	margin: 0;
+  color: ${({ theme }) => theme.colors.secondary.default};
+}
+
+h1 {
+  font-size: 4rem;
+}
+
+span {
+  color: ${({ theme }) => theme.colors.background.default};
 }
 
 

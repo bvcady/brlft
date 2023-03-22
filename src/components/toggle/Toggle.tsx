@@ -14,15 +14,18 @@ const Container = styled.div`
   width: 100%;
 
   button {
-    color: ${({ theme }) => theme.colors.secondary.default};
-    display: flex;
-    justify-content: center;
     align-items: center;
-    padding: 1rem;
-    font-size: 1rem;
-    width: 100%;
+    color: ${({ theme }) => theme.colors.secondary.default};
     cursor: pointer;
+    display: flex;
+    font-size: 1rem;
+    justify-content: center;
+    padding: 1rem;
+    text-decoration: none;
+    width: 100%;
+
     transform: none !important;
+
     :not(:first-of-type) {
       border-left: 2px solid ${({ theme }) => theme.colors.text.default};
     }
