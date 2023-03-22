@@ -36,7 +36,7 @@ export const Loader = ({ onFinished, type }: ILoader) => {
       style={{
         pointerEvents: "none",
         margin: "3rem auto",
-        width: "clamp(200px, 350px, 66%)",
+        width: "100%",
         overflow: "visible",
         filter: "url(#displacementFilter)",
         display: "flex",
@@ -44,6 +44,7 @@ export const Loader = ({ onFinished, type }: ILoader) => {
         alignItems: "center",
         gap: "1rem",
         userSelect: "none",
+        height: "4rem",
       }}
     >
       <div

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-use-before-define */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { Loader } from "../components/loader/Loader";
@@ -57,45 +58,65 @@ export const HomeScreen = () => {
 
   return (
     <ScreenWrapper center>
+      <h1>Welkom!</h1>
       {image && (
         <img
           src={`images/${image}`}
           alt=""
           style={{
             objectFit: "contain",
-            width: "clamp(150px, 300px, 50%)",
-            height: "clamp(150px, 300px, 50%)",
+            width: "clamp(150px, 250px, 50%)",
+            height: 250,
           }}
         />
       )}
-      {isLoading ? (
-        <Loader
-          type={(queryType as string) || storedType}
-          onFinished={(input: string) => {
-            if (queryType) {
-              return handleLoaderFinished(input);
-            }
-            if (storedType) {
-              return handleNavigate();
-            }
-            return null;
-          }}
-        />
-      ) : null}
-      {showOptions && (
-        <Toggle
-          options={[
-            {
-              label: "Dag Gasten",
-              callback: () => setStoredType("dag"),
-            },
-            {
-              label: "Avond Gasten",
-              callback: () => setStoredType("avond"),
-            },
-          ]}
-        />
-      )}
+      <WaitingArea>
+        {isLoading ? (
+          <Loader
+            type={(queryType as string) || storedType}
+            onFinished={(input: string) => {
+              if (queryType) {
+                return handleLoaderFinished(input);
+              }
+              if (storedType) {
+                return handleNavigate();
+              }
+              return null;
+            }}
+          />
+        ) : null}
+        {showOptions ? (
+          <Toggle
+            options={[
+              {
+                label: "Dag Gasten",
+                callback: () => setStoredType("dag"),
+              },
+              {
+                label: "Avond Gasten",
+                callback: () => setStoredType("avond"),
+              },
+            ]}
+          />
+        ) : null}
+      </WaitingArea>
     </ScreenWrapper>
+  );
+};
+
+const WaitingArea = ({ children }) => {
+  return (
+    <div
+      style={{
+        height: "4rem",
+        width: "clamp(300px, 400px, 90vw)",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        alignItems: "center",
+      }}
+    >
+      {children}
+    </div>
   );
 };
