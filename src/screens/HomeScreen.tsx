@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
 import { Loader } from "../components/loader/Loader";
 import { Toggle } from "../components/toggle/Toggle";
 import { ScreenWrapper } from "../layout/ScreenWrapper";

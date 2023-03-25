@@ -22,10 +22,17 @@ const CeremonyPage = () => {
     }
   }, [type]);
 
+  const handleSendGridTest = async () => {
+    await fetch("/api/mail", { method: "POST" });
+  };
+
   return (
     <PageLayout>
       {contentVisible ? (
         <ScreenWrapper>
+          <button type="button" onClick={handleSendGridTest}>
+            try me
+          </button>
           <div
             style={{
               position: "relative",
