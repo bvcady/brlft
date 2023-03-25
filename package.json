@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
-    "email-dev": "email dev",
+    "email-dev": "email dev --port 3001",
     "build": "next build",
     "start": "next serve",
     "lint": "eslint --fix"
@@ -14,6 +14,7 @@
   "license": "ISC",
   "dependencies": {
     "@react-email/button": "0.0.7",
+    "@react-email/components": "^0.0.4",
     "@react-email/html": "0.0.4",
     "@sendgrid/mail": "^7.7.0",
     "@types/next": "^9.0.0",
@@ -22,6 +23,7 @@
     "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.55.0",
     "@typescript-eslint/parser": "^5.55.0",
+    "clsx": "^1.2.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-import": "^2.27.5",
