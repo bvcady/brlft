@@ -13,27 +13,32 @@ import {
 import * as React from "react";
 
 interface MagicLinkEmailProps {
+  guest: { firstName: string; lastName?: string };
   token?: string;
 }
 
-export const MagicLinkEmail = ({ token = "TEMP TOKEN" }: MagicLinkEmailProps) => (
+export const MagicLinkEmail = ({
+  guest = { firstName: "Bob" },
+  token = "TEMP TOKEN",
+}: MagicLinkEmailProps) => (
   <Html>
     <Head />
     <Preview>{`Log in met deze 'magic' link`}</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Heading style={h1}>Welkom, bij onze bruiloft.</Heading>
         <Img
           src="https://www.brlft.nl/images/bob-en-lisa.png"
           alt="Lisa en Bob"
-          style={{ margin: "2rem auto", width: "40%" }}
+          style={{ margin: "0 auto", maxWidth: "250px", width: "90vw" }}
         />
+        <Heading style={h1}>Hoi {guest.firstName}!</Heading>
+        <Heading style={h2}>Je bent welkom op de bruiloft van Lisa en Bob!</Heading>
         <Text style={{ ...text }}>
           Fijn om te zien dat onze uitnodiging goed bij je terecht is gekomen.
         </Text>
         <Text style={{ ...text }}>
-          Om te registreren wie er allemaal wel of niet kunnen komen naar onze bruiloft willen dit
-          graag registreren op basis van jouw email adres:
+          Om te weten te komen wie er allemaal wel, of niet, kunnen komen naar onze bruiloft willen
+          dit graag registreren op basis van jouw email adres:
         </Text>
         <Link
           href={`https://brlft.nl${token ? `?token=${token}` : ""}`}
@@ -43,7 +48,8 @@ export const MagicLinkEmail = ({ token = "TEMP TOKEN" }: MagicLinkEmailProps) =>
             display: "block",
           }}
         >
-          Klik hier om in te loggen voor onze bruiloft (brlft.nl)
+          Klik hier om in te loggen voor onze bruiloft{" "}
+          <i style={{ color: "#230478" }}>(brlft.nl)</i>
         </Link>
         <Text style={{ ...text }}>Of kopieer deze tekst:</Text>
         <code style={code}>{token}</code>
@@ -86,12 +92,16 @@ const main = {
   fontFamily: `Courier New`,
   backgroundColor: "#e9efff",
   color: "#230478",
+  backgroundImage: "url(https://www.brlft.nl/images/flakes.png)",
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  padding: "5rem 1rem",
 };
 
 const container = {
   boxShadow: "0 0 0.5rem 0 rgba(0, 0, 0, 0.2)",
   padding: "2rem",
-  margin: "2rem auto",
+  margin: "0 auto",
   borderRadius: "0.25rem",
   backgroundColor: "rgba(255,255,255,0.85)",
 };
@@ -101,6 +111,16 @@ const h1 = {
   fontSize: "32px",
   fontWeight: "bold",
   padding: "0",
+  margin: 0,
+};
+
+const h2: React.CSSProperties = {
+  fontFamily: "Arial",
+  fontSize: "20px",
+  fontWeight: "bold",
+  padding: "0",
+  maxWidth: "300px",
+  fontStyle: "italic",
 };
 
 const link = {
