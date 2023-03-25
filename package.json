@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "next dev",
+    "email-dev": "email dev",
     "build": "next build",
     "start": "next serve",
     "lint": "eslint --fix"
@@ -12,6 +13,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@react-email/render": "^0.0.6",
+    "@sendgrid/mail": "^7.7.0",
     "@types/next": "^9.0.0",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
