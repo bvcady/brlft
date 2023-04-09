@@ -1,10 +1,12 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
+import { Hearts } from "react-loading-icons";
 import { FormWrapper } from "./FormWrapper";
 import { Toggle } from "../toggle/Toggle";
 import { Form } from "./Styled.Form";
-import { useLocalStorage } from "../../utils/hooks/useLocalStorage";
+import { theme } from "../../styles/theme";
+import CheckMark from "../../../public/images/check.svg";
 
 interface GuestProps {
   user: {
@@ -15,11 +17,12 @@ interface GuestProps {
 }
 interface GuestResponse {
   status?: number;
-  errors?: Array<{ message: string }>;
+  message?: string;
 }
 
 const SubmitButton = styled.button`
-  margin: 1rem auto;
+  margin-inline: auto;
+  margin-top: 1rem;
   padding: 1rem;
   border: 2px solid ${({ theme }) => theme.colors.secondary.default};
   border-radius: 0.25rem;
@@ -40,6 +43,8 @@ export const AddUserForm = () => {
   const { type: queryType = "" } = router.query;
 
   const [guestType, setGuestType] = useState<GuestType>(undefined);
+  const [formValid, setFormValid] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [emailSent, setEmailSent] = useState("");
 
   const checkQueryType = queryType === "borrel" || queryType === "dag";
@@ -56,10 +61,16 @@ export const AddUserForm = () => {
 
     console.log({ data });
 
-    const { status, errors }: GuestResponse = data;
+    const { status, message }: GuestResponse = data;
 
     if (status === 200) {
       setEmailSent(user.email);
+    }
+  };
+
+  const checkValidity = () => {
+    if (formRef.current.checkValidity()) {
+      setFormValid(true);
     }
   };
 
@@ -70,8 +81,7 @@ export const AddUserForm = () => {
           ref={formRef}
           onSubmit={(e: FormEvent) => {
             e.preventDefault();
-            const isValid = formRef.current.checkValidity();
-            if (isValid) {
+            if (formValid && guestType) {
               handleGuest({
                 user: {
                   name: nameRef.current?.value,
@@ -82,15 +92,46 @@ export const AddUserForm = () => {
             }
           }}
         >
-          <fieldset name="dietaryWishes">
+          {guestType && formValid && !emailSent ? (
+            <div
+              style={{
+                position: "absolute",
+                top: "0.25rem",
+                right: "0.5rem",
+                borderRadius: "1rem",
+                background: "#00D100",
+                zIndex: 2,
+                display: "flex",
+                placeContent: "center",
+                padding: "0.25rem",
+              }}
+            >
+              <CheckMark fill="white" width="1rem" />
+            </div>
+          ) : null}
+          <fieldset name="name">
             <legend>Wie ben je?</legend>
             <label htmlFor="name">
               Je naam:
-              <input required ref={nameRef} type="text" autoComplete="off" data-lpignore="true" />
+              <input
+                onBlur={checkValidity}
+                required
+                ref={nameRef}
+                type="text"
+                autoComplete="off"
+                data-lpignore="true"
+              />
             </label>
             <label htmlFor="email">
               Je email:
-              <input required ref={emailRef} type="email" autoComplete="off" data-lpignore="true" />
+              <input
+                onBlur={checkValidity}
+                required
+                ref={emailRef}
+                type="email"
+                autoComplete="off"
+                data-lpignore="true"
+              />
             </label>
 
             <Toggle
@@ -109,7 +150,19 @@ export const AddUserForm = () => {
               ]}
             />
           </fieldset>
-          {guestType ? <SubmitButton type="submit">Begin!</SubmitButton> : null}
+
+          <SubmitButton type="submit">
+            {guestType && formValid && !emailSent ? (
+              `Begin!`
+            ) : (
+              <Hearts
+                width="2rem"
+                height="1rem"
+                style={{ margin: "0", padding: "0" }}
+                fill={theme.colors.secondary.default}
+              />
+            )}
+          </SubmitButton>
         </Form>
       ) : null}
       {emailSent ? (

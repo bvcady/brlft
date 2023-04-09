@@ -12,13 +12,12 @@ const Wrapper = styled.div`
   backdrop-filter: blur(10px);
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 0.5rem;
+  padding: 3rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
   height: 100%;
-  overflow: visible;
-  padding: 3rem 1rem;
-  padding-bottom: 1rem;
+  overflow: hidden;
   position: relative;
   width: clamp(300px, 738px, 100vw);
 
@@ -52,7 +51,7 @@ export const FormWrapper = ({ children }: IFormWrapper) => {
 
       const shapes = new Array(24).fill("").map(() => {
         return {
-          x: Math.random() * (dims.width - 250) + 75,
+          x: Math.random() * (dims.width + 100) - 100,
           y: Math.random() * (dims.height + 25) - 50,
           borders: [
             20 + Math.random() * 80,
@@ -68,8 +67,11 @@ export const FormWrapper = ({ children }: IFormWrapper) => {
   }, [wrapperRef]);
 
   return (
-    <div style={{ position: "relative", marginTop: "2rem" }}>
-      <Wrapper ref={wrapperRef}>{children}</Wrapper>
+    <Wrapper
+      ref={wrapperRef}
+      style={{ position: "relative", marginTop: "2rem", overflow: "hidden" }}
+    >
+      {children}
       {bgShapes.map((s) => (
         <div
           style={{
@@ -87,6 +89,6 @@ export const FormWrapper = ({ children }: IFormWrapper) => {
           }}
         />
       ))}
-    </div>
+    </Wrapper>
   );
 };
