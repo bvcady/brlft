@@ -21,7 +21,7 @@ const CeremonyPage = () => {
 
   useEffect(() => {
     if (!authToken) {
-      router.push("/").catch((e) => console.log(e));
+      router.replace("/").catch((e) => console.log(e));
     }
   }, [authToken]);
 

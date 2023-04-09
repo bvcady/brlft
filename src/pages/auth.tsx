@@ -38,7 +38,7 @@ const AuthPage = () => {
         {!errorMessage ? (
           <Loader
             onFinished={() => {
-              router.push("/aanmelden");
+              router.replace("/aanmelden");
             }}
           />
         ) : null}

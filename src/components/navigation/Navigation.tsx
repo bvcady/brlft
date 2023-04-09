@@ -79,10 +79,11 @@ export const Navigation = ({ children }: INavigation) => {
   }, []);
 
   const router = useRouter();
+  const { asPath } = router;
 
   return (
     <Wrapper>
-      <Logo type="button" onClick={() => router.push("/")}>
+      <Logo type="button" onClick={() => router.replace("/")}>
         Brlf<i>t</i>
       </Logo>
       {/* {user ? <p>Hallo {user.name}</p> : null} */}
@@ -92,7 +93,8 @@ export const Navigation = ({ children }: INavigation) => {
             type="button"
             onClick={async () => {
               deleteCookie("brlft-auth-token");
-              router.push("/");
+              if (asPath === "/") return router.reload();
+              return router.replace("/");
             }}
           >
             Log Out
@@ -100,7 +102,7 @@ export const Navigation = ({ children }: INavigation) => {
           <button
             type="button"
             onClick={() => {
-              router.push("/aanmelden");
+              router.replace("/aanmelden");
             }}
           >
             Aanmelden

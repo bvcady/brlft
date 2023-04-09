@@ -13,7 +13,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (authToken) {
-      router.push("/aanmelden").catch((e) => console.log(e));
+      router.replace("/aanmelden").catch((e) => console.log(e));
     }
   }, [authToken]);
 
