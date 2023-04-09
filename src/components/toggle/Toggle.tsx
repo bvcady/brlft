@@ -1,7 +1,17 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ disabled?: boolean }>`
   width: clamp(300px, 600px, 90vw);
+  margin: 0 auto;
+  padding: 1rem 0.5rem;
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      cursor: not-allowed;
+      button {
+        pointer-events: none;
+      }
+    `}
 `;
 
 const Container = styled.div`
@@ -12,43 +22,62 @@ const Container = styled.div`
   border-radius: 0.25rem;
   overflow: hidden;
   width: 100%;
+`;
 
-  button {
-    align-items: center;
-    color: ${({ theme }) => theme.colors.secondary.default};
-    cursor: pointer;
-    display: flex;
-    font-size: 1rem;
-    justify-content: center;
-    padding: 1rem;
-    text-decoration: none;
-    width: 100%;
+const ToggleButton = styled.button<{ isActive?: boolean }>`
+  align-items: center;
+  color: ${({ theme }) => theme.colors.secondary.default};
+  cursor: pointer;
+  display: flex;
+  font-size: 0.8rem;
+  justify-content: center;
+  padding: 1rem;
+  text-decoration: none;
+  width: 100%;
 
-    transform: none !important;
+  transform: none !important;
 
-    :not(:first-of-type) {
-      border-left: 2px solid ${({ theme }) => theme.colors.text.default};
-    }
-
-    :hover {
-      background-color: ${({ theme }) => theme.colors.accent.default};
-    }
+  :not(:first-of-type) {
+    border-left: 2px solid ${({ theme }) => theme.colors.text.default};
   }
+
+  :hover {
+    background-color: ${({ theme }) => theme.colors.accent.default};
+  }
+
+  ${({ isActive }) =>
+    isActive &&
+    css`
+      background-color: ${({ theme }) => theme.colors.main.default};
+      /* color: ${({ theme }) => theme.colors.accent.default}; */
+    `}
+
+  ${({ disabled }) =>
+    disabled &&
+    css`
+      pointer-events: none;
+    `}
 `;
 
 interface IButtonGroup {
-  options: { label: string; callback?: () => void }[];
+  disabled?: boolean;
+  options: { label: string; callback?: () => void; isActive?: boolean }[];
 }
 
-export const Toggle = ({ options }: IButtonGroup) => {
+export const Toggle = ({ options, disabled }: IButtonGroup) => {
   return (
-    <Wrapper>
+    <Wrapper disabled={disabled}>
       {options?.length ? (
         <Container>
           {options.map((opt) => (
-            <button key={opt.label} type="button" onClick={opt.callback}>
+            <ToggleButton
+              isActive={opt.isActive}
+              key={opt.label}
+              type="button"
+              onClick={opt.callback}
+            >
               {opt.label}
-            </button>
+            </ToggleButton>
           ))}
         </Container>
       ) : null}

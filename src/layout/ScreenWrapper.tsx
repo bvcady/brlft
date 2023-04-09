@@ -8,13 +8,13 @@ const Wrapper = styled.main<{ center?: boolean }>`
   align-items: center;
   gap: 1rem;
   /* overflow: hidden; */
-  padding: 5rem 0rem;
+  padding: 7rem 0rem;
   padding-bottom: 7.5rem;
   min-height: 100vh;
   ${({ center }) =>
     center &&
     css`
-      justify-content: center;
+      /* justify-content: center; */
     `}
   width: 100%;
   position: relative;

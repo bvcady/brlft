@@ -2,11 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { theme } from "../../styles/theme";
 
 interface ILoader {
-  onFinished?: (input: string) => void;
-  type?: string;
+  onFinished?: () => void;
 }
 
-export const Loader = ({ onFinished, type }: ILoader) => {
+export const Loader = ({ onFinished }: ILoader) => {
   const [percentage, setPercentage] = useState(0);
 
   const percentageInterval = useRef();
@@ -25,9 +24,7 @@ export const Loader = ({ onFinished, type }: ILoader) => {
   useEffect(() => {
     if (percentage >= 100) {
       clearInterval(percentageInterval.current);
-      if (type) {
-        onFinished?.(type);
-      }
+      onFinished?.();
     }
   }, [percentage]);
 

@@ -45,6 +45,11 @@ export const GlobalStyles = createGlobalStyle`
 
     transition: all 0.3s ease;
   }
+  img {
+    user-select: none;
+    -webkit-user-drag: none;
+    pointer-events: none;
+  }
 
   p, label, legend {
     font-family: 'Courier New', Courier, monospace;
