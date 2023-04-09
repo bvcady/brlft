@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
-import { useLocalStorage } from "../../utils/hooks/useLocalStorage";
+import { deleteCookie } from "cookies-next";
 
 interface INavigation {
   children?: ReactNode;
@@ -71,19 +71,12 @@ export const Navigation = ({ children }: INavigation) => {
   const [hamburger, toggleHamburger] = useState(false);
   const [mobileDevice, toggleMobileDevice] = useState(true);
 
-  const [type, setType] = useLocalStorage("brlft-type", "");
-  const [user, setUser] = useLocalStorage("brlft-user", "");
-
   useEffect(() => {
     if (isMobile) {
       toggleHamburger(true);
       toggleMobileDevice(true);
     }
   }, []);
-
-  useEffect(() => {
-    console.log("user changed", user);
-  }, [user]);
 
   const router = useRouter();
 
@@ -92,14 +85,13 @@ export const Navigation = ({ children }: INavigation) => {
       <Logo type="button" onClick={() => router.push("/")}>
         Brlf<i>t</i>
       </Logo>
-      {user ? <p>Hallo {user.name}</p> : null}
+      {/* {user ? <p>Hallo {user.name}</p> : null} */}
       {!hamburger ? (
         <MenuItems>
           <button
             type="button"
-            onClick={() => {
-              setType("");
-              setUser("");
+            onClick={async () => {
+              deleteCookie("brlft-auth-token");
               router.push("/");
             }}
           >
