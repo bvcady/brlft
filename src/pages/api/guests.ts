@@ -24,8 +24,11 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     return db.collection("guests");
   };
 
-  const sendEmail = ({ name, email, token, type }) => {
+  const sendEmail = async ({ name, email, token }) => {
     const API_KEY = process.env.SENDGRID_API_KEY;
+
+    console.log({ name, email, token, origin: req.headers.origin });
+
     const emailHtml = render(
       MagicLinkEmail({
         name: name as string,
@@ -42,7 +45,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       text: `Hallo ${name}, bedankt voor je reactie op onze uitnodiging`,
       html: emailHtml,
     };
-    sgMail.send(msg);
+    await sgMail.send(msg);
   };
 
   if (method === "POST") {
@@ -68,12 +71,11 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
           timestamp,
         });
 
-        console.log({ id: newUser.insertedId.toString() });
         const token = jwt.sign({ id: newUser.insertedId.toString() }, "VERY_SECRET", {
           expiresIn: 15 * 60,
         });
 
-        sendEmail({ token, name, email, type });
+        await sendEmail({ token, name, email });
 
         res
           .status(200)
@@ -83,9 +85,8 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const token = jwt.sign({ id: queriedUser._id.toString() }, "VERY_SECRET", {
         expiresIn: 15 * 60,
       });
-      console.log({ id: queriedUser._id.toString() });
 
-      sendEmail({ token, name, email, type });
+      await sendEmail({ token, name, email });
 
       res
         .status(200)
