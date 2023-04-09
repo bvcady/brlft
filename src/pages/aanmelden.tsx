@@ -25,6 +25,10 @@ const CeremonyPage = () => {
     }
   }, [authToken]);
 
+  const handleSendGridTest = async () => {
+    await fetch("/api/mail", { method: "POST" });
+  };
+
   return (
     <PageLayout>
       <ScreenWrapper>
