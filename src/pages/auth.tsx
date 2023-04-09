@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../layout/PageLayout";

@@ -27,8 +27,6 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
   const sendEmail = async ({ name, email, token }) => {
     const API_KEY = process.env.SENDGRID_API_KEY;
 
-    console.log({ name, email, token, origin: req.headers.origin });
-
     const emailHtml = render(
       MagicLinkEmail({
         name: name as string,
@@ -94,22 +92,6 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     } catch (e) {
       res.status(500).json({ status: 500, message: e });
     }
-
-    // try {
-    //   const timestamp = new Date().toISOString();
-    //   const mongoResponse = await guests.updateOne(
-    //     { email },
-    //     { $set: { name, email, type, timestamp } },
-    //     { upsert: true },
-    //   );
-    //   if (mongoResponse.acknowledged) {
-    //     res
-    //       .status(200)
-    //       .json({ message: "User successfully added.", data: { ...guest, timestamp } });
-    //   }
-    // } catch (e) {
-    //   res.status(500).json({ message: "Something went wrong", error: e.message });
-    // }
   }
   res.end();
   // if (method === 'POST') {}

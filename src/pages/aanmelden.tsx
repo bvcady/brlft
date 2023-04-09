@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { getCookie } from "cookies-next";
@@ -17,17 +18,13 @@ const CeremonyPage = () => {
   const router = useRouter();
   const authToken = getCookie("brlft-auth-token");
 
-  const [guest, setGuest] = useState<Guest | undefined>(undefined);
+  const [guest] = useState<Guest | undefined>(undefined);
 
   useEffect(() => {
     if (!authToken) {
-      router.replace("/").catch((e) => console.log(e));
+      router.replace("/").catch((e) => console.error(e));
     }
   }, [authToken]);
-
-  const handleSendGridTest = async () => {
-    await fetch("/api/mail", { method: "POST" });
-  };
 
   return (
     <PageLayout>
@@ -67,19 +64,6 @@ const CeremonyPage = () => {
               te creëren op onze trouwdag!
             </p>
           </div>
-          {/* <div
-              style={{
-                width: "100%",
-                height: 350,
-                zIndex: "-1",
-                borderRadius: "1rem",
-                backgroundImage:
-                  "url(https://alinebouma.nl/assets/images/content/_gridRetina/StephanieFolkert500_2020-08-29-193839.JPG)",
-                backgroundPosition: "0px 60%",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-              }}
-            /> */}
         </Item>
         <Item full>
           <RSVPForm type={guest?.type || "borrel"} />

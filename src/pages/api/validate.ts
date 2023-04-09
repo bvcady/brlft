@@ -53,7 +53,6 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
         res.status(200).json({ message: "Succesfully logged on", status: 200 });
       }
     } catch (e) {
-      console.error(e);
       res.status(500).json({ status: 500, message: e.message });
     }
   }
