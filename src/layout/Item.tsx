@@ -9,8 +9,10 @@ interface IItem {
 
 const Wrapper = styled.section<{ full?: boolean }>`
   width: 100%;
+  max-width: 100%;
   display: flex;
   flex-direction: column;
+  align-items: center;
   padding: 1rem 2rem;
   min-height: 25vh;
   ${({ full }) =>

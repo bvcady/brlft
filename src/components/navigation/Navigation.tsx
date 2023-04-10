@@ -2,14 +2,17 @@ import { useRouter } from "next/router";
 import { ReactNode, useEffect, useState } from "react";
 import { isMobile } from "react-device-detect";
 import styled from "styled-components";
-import { deleteCookie } from "cookies-next";
+import { deleteCookie, getCookie } from "cookies-next";
+import Link from "next/link";
+import { theme } from "../../styles/theme";
 
 interface INavigation {
   children?: ReactNode;
 }
 
 const Wrapper = styled.nav`
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   display: flex;
   gap: 2rem;
   min-height: 2rem;
@@ -19,7 +22,9 @@ const Wrapper = styled.nav`
   top: 2rem;
   width: clamp(100px, 1200px, 90vw);
   /* max-width: 100%; */
-  z-index: 100;
+  z-index: 10;
+
+  font-size: 0.8rem;
 
   p {
     padding: 0;
@@ -33,21 +38,24 @@ const Wrapper = styled.nav`
 
 const Logo = styled.button`
   /* filter: url(#displacementFilter); */
+  padding: 0.25rem 0;
   font-size: 1.5rem;
   text-decoration: none;
   text-transform: none;
-  color: ${({ theme }) => theme.colors.secondary.default};
+  color: ${theme.colors.secondary.default};
 `;
 
 const MenuItems = styled.div`
   display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 0.5rem 0;
   gap: 1rem;
   margin-left: auto;
 `;
 
 const Hamburger = styled.div`
   margin-left: auto;
-  font-weight: 900;
 
   display: flex;
   flex-direction: column;
@@ -55,6 +63,24 @@ const Hamburger = styled.div`
   cursor: pointer;
   height: 1.5rem;
   width: 1.5rem;
+`;
+
+const Close = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  cursor: pointer;
+  height: 1.5rem;
+  width: 1.5rem;
+
+  * {
+    font-family: Kocha Clean;
+    padding: 0;
+    margin: 0;
+    line-height: 0.5rem;
+  }
 `;
 
 const BG = styled.div`
@@ -69,7 +95,12 @@ const BG = styled.div`
 `;
 export const Navigation = ({ children }: INavigation) => {
   const [hamburger, toggleHamburger] = useState(false);
-  const [mobileDevice, toggleMobileDevice] = useState(true);
+  const [mobileDevice, toggleMobileDevice] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(false);
+
+  useEffect(() => {
+    setLoggedIn(!!getCookie("brlft-auth-token"));
+  }, []);
 
   useEffect(() => {
     if (isMobile) {
@@ -83,34 +114,79 @@ export const Navigation = ({ children }: INavigation) => {
 
   return (
     <Wrapper>
-      <Logo type="button" onClick={() => router.replace("/")}>
+      <Logo
+        type="button"
+        onClick={async () => {
+          if (!loggedIn) {
+            return router.replace("/");
+          }
+          return router.push("/info");
+        }}
+      >
         Brlf<i>t</i>
       </Logo>
       {/* {user ? <p>Hallo {user.name}</p> : null} */}
       {!hamburger ? (
         <MenuItems>
-          <button
-            type="button"
-            onClick={async () => {
-              deleteCookie("brlft-auth-token");
-              if (asPath === "/") return router.reload();
-              return router.replace("/");
-            }}
-          >
-            Log Out
-          </button>
-          <button
-            type="button"
-            onClick={() => {
-              router.replace("/aanmelden");
-            }}
-          >
-            Aanmelden
-          </button>
+          {loggedIn ? (
+            <>
+              <Link style={{ color: theme.colors.main.default }} href="/rsvp">
+                Meld je aan!
+              </Link>
+              <Link href="/locatie">Locatie</Link>
+              <Link href="/time-table">Tijd Indeling</Link>
+              <Link href="/contact">Contact</Link>
+              <button
+                style={{
+                  color: "#cc3300",
+                  marginLeft: "auto",
+                  paddingLeft: "2rem",
+                  justifySelf: "flex-end",
+                }}
+                type="button"
+                onClick={async () => {
+                  deleteCookie("brlft-auth-token");
+                  if (asPath === "/") return router.reload();
+                  return router.replace("/");
+                }}
+              >
+                Log Out
+              </button>
+            </>
+          ) : null}
           {children}
         </MenuItems>
       ) : null}
-      {hamburger && mobileDevice ? (
+      {!hamburger && mobileDevice && loggedIn ? (
+        <Close
+          onClick={() => {
+            toggleHamburger(true);
+          }}
+        >
+          <svg width="1.5rem" height="1.5rem">
+            <line
+              x1={3}
+              x2={19}
+              y1={6}
+              y2={18}
+              strokeWidth={2}
+              stroke={theme.colors.secondary.default}
+              strokeLinecap="round"
+            />
+
+            <line
+              x1={3}
+              x2={19}
+              y1={18}
+              y2={6}
+              strokeWidth={2}
+              stroke={theme.colors.secondary.default}
+              strokeLinecap="round"
+            />
+          </svg>
+        </Close>
+      ) : null}
+      {hamburger && mobileDevice && loggedIn ? (
         <Hamburger
           onClick={() => {
             toggleHamburger(false);
@@ -123,7 +199,7 @@ export const Navigation = ({ children }: INavigation) => {
               y1={6}
               y2={6}
               strokeWidth={2}
-              stroke="black"
+              stroke={theme.colors.secondary.default}
               strokeLinecap="round"
             />
 
@@ -133,7 +209,7 @@ export const Navigation = ({ children }: INavigation) => {
               y1={12}
               y2={12}
               strokeWidth={2}
-              stroke="black"
+              stroke={theme.colors.secondary.default}
               strokeLinecap="round"
             />
 
@@ -143,7 +219,7 @@ export const Navigation = ({ children }: INavigation) => {
               y1={18}
               y2={18}
               strokeWidth={2}
-              stroke="black"
+              stroke={theme.colors.secondary.default}
               strokeLinecap="round"
             />
           </svg>

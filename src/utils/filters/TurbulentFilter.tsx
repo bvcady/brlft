@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
-import { isMobile } from "react-device-detect";
+import { useDevicePixelRatio } from "use-device-pixel-ratio";
 
 export const TurbulentFilter = () => {
-  const [animated, toggleAnimated] = useState(false);
+  const dpr = useDevicePixelRatio();
+  const [frequency, setFrequency] = useState(0.015);
 
   useEffect(() => {
-    if (isMobile) {
-      toggleAnimated(false);
-    }
-  }, []);
+    setFrequency(dpr * 0.0075);
+  }, [dpr]);
 
   return (
     <svg display="none">
@@ -17,22 +16,21 @@ export const TurbulentFilter = () => {
           <feTurbulence
             seed={3}
             type="turbulence"
-            baseFrequency="0.015"
+            baseFrequency={frequency}
             numOctaves="8"
             result="turbulence"
           >
-            {!animated ? (
-              <animate attributeName="seed" from="0" to="5" dur="1s" repeatCount="indefinite" />
-            ) : null}
+            <animate attributeName="seed" from="0" to="5" dur="1s" repeatCount="indefinite" />
           </feTurbulence>
           <feDisplacementMap
             id="dm"
             in2="turbulence"
             in="SourceGraphic"
-            scale="4"
+            scale={4}
             xChannelSelector="R"
             yChannelSelector="G"
           />
+          <feGaussianBlur in="dm" stdDeviation={0.5} />
         </filter>
       </defs>
     </svg>

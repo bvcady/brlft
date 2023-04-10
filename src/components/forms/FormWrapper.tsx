@@ -73,11 +73,12 @@ export const FormWrapper = ({ children }: IFormWrapper) => {
       {children}
       {bgShapes.map((s) => (
         <div
+          key={`${s.x}-${s.y}`}
           style={{
             position: "absolute",
             top: s.y,
             left: s.x,
-            filter: "blur(3px)",
+            filter: "url(#displacementFilter) blur(2px)",
             borderRadius: `${s.borders[0]}% ${s.borders[1]}% ${s.borders[2]}% ${s.borders[3]}%`,
             transform: `rotate(${s.rotation}deg)`,
             width: 100,

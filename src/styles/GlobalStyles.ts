@@ -32,17 +32,25 @@ export const GlobalStyles = createGlobalStyle`
     font-family: Kocha Clean;
     margin: 0;  
     padding: 0;
-    text-decoration: underline;
+    
+    text-decoration: none;
     text-transform: uppercase;
     border: none;
     background-color: transparent;
     outline: none;
+    font-size: inherit;
+
+    cursor: pointer;
 
 
     :hover {
       transform: translateY(-0.125rem);
     }
 
+    :disabled {
+      color: grey;
+      pointer-events: none;
+    }
     transition: all 0.3s ease;
   }
   img {
@@ -55,6 +63,10 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Courier New', Courier, monospace;
     color: ${({ theme }) => theme.colors.text.default};
     font-size: 1.2rem;
+
+    @media screen and (max-width: 400px){
+      font-size: 1rem;
+    }
   }
 
   i {

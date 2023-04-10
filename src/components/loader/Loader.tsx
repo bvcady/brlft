@@ -34,6 +34,7 @@ export const Loader = ({ onFinished }: ILoader) => {
         pointerEvents: "none",
         margin: "3rem auto",
         width: "100%",
+        maxWidth: "400px",
         overflow: "visible",
         filter: "url(#displacementFilter)",
         display: "flex",
