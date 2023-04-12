@@ -1,8 +1,10 @@
+/* eslint-disable no-console */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { Loader } from "../components/loader/Loader";
+import { Item } from "../layout/Item";
 
 const AuthPage = () => {
   const router = useRouter();
@@ -34,14 +36,16 @@ const AuthPage = () => {
   return (
     <PageLayout>
       <ScreenWrapper>
-        {errorMessage ? <h3>{errorMessage}</h3> : null}
-        {!errorMessage ? (
-          <Loader
-            onFinished={() => {
-              router.push("/aanmelden");
-            }}
-          />
-        ) : null}
+        <Item>
+          {errorMessage ? <h3>{errorMessage}</h3> : null}
+          {!errorMessage ? (
+            <Loader
+              onFinished={() => {
+                router.replace("/info");
+              }}
+            />
+          ) : null}
+        </Item>
       </ScreenWrapper>
     </PageLayout>
   );

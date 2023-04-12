@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { FormEvent, useState } from "react";
-import styled from "styled-components";
-import { theme } from "../../../styles/theme";
 import { useLocalStorage } from "../../../utils/hooks/useLocalStorage";
 import { FormWrapper } from "../FormWrapper";
 import { Form } from "../Styled.Form";
@@ -15,7 +13,7 @@ interface IForm {
 }
 
 export const RSVPForm = ({ type }: IForm) => {
-  const [people, setPeople] = useState([defaultPerson]);
+  const [people] = useState([defaultPerson]);
   const [user, setUser] = useLocalStorage("brlft-user", "");
 
   return (
@@ -50,17 +48,13 @@ export const RSVPForm = ({ type }: IForm) => {
           </fieldset>
         </Form>
       ) : null}
-      {/* <label htmlFor="nPeople">
-        Hoeveel gasten?
-        {people.length}
-      </label> */}
       {user ? people.map((p) => <PersonFormSection key={p.name} type={type} />) : null}
     </FormWrapper>
   );
 };
 
 const PersonFormSection = ({ type }: IForm) => {
-  const [person, setPerson] = useState({ name: "" });
+  const [person] = useState({ name: "" });
 
   return (
     <Form>

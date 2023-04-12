@@ -1,7 +1,7 @@
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { getCookie } from "cookies-next";
 import { useEffect } from "react";
-import { redirect } from "next/dist/server/api-utils";
 import { useRouter } from "next/router";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { RandomImage } from "../components/decoration/random-image/RandomImage";
@@ -13,7 +13,7 @@ export const HomeScreen = () => {
 
   useEffect(() => {
     if (authToken) {
-      router.push("/aanmelden").catch((e) => console.log(e));
+      router.replace("/info").catch((e) => console.log(e));
     }
   }, [authToken]);
 

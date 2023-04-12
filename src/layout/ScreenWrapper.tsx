@@ -17,6 +17,7 @@ const Wrapper = styled.main<{ center?: boolean }>`
       /* justify-content: center; */
     `}
   width: 100%;
+  max-width: 100%;
   position: relative;
 `;
 

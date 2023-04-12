@@ -7,7 +7,7 @@ interface IPageLayout {
 
 const Wrapper = styled.div`
   width: 100vw;
-  max-width: 1240px;
+  max-width: 1024px;
   position: relative;
 `;
 

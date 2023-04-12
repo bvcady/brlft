@@ -1,6 +1,10 @@
-import { useEffect, useState } from "react";
+import { CSSProperties, useEffect, useState } from "react";
 
-export const RandomImage = () => {
+interface Props {
+  style?: CSSProperties;
+}
+
+export const RandomImage = ({ style }: Props) => {
   const images = [
     "bob-en-lisa.png",
     "champagne.png",
@@ -26,6 +30,7 @@ export const RandomImage = () => {
         objectFit: "contain",
         width: "clamp(150px, 250px, 50%)",
         height: 250,
+        ...style,
       }}
     />
   );

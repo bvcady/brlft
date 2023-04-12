@@ -44,7 +44,6 @@ export const AddUserForm = () => {
 
   const [guestType, setGuestType] = useState<GuestType>(undefined);
   const [formValid, setFormValid] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
   const [emailSent, setEmailSent] = useState("");
 
   const checkQueryType = queryType === "borrel" || queryType === "dag";
@@ -59,9 +58,7 @@ export const AddUserForm = () => {
     const response = await fetch("/api/guests", { method: "POST", body: JSON.stringify(user) });
     const data = await response.json();
 
-    console.log({ data });
-
-    const { status, message }: GuestResponse = data;
+    const { status }: GuestResponse = data;
 
     if (status === 200) {
       setEmailSent(user.email);

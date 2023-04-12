@@ -34,7 +34,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
         res.status(400).json({ status: 400, message: "The request was missing token" });
       }
 
-      const payload = jwt.verify(token, "VERY_SECRET");
+      const payload = jwt.verify(token, process.env.JWT_SECRET);
 
       // @ts-ignore
       const { id } = payload;
@@ -45,15 +45,12 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
         res.status(400).json({ message: "Guest not found", status: 400 });
       }
 
-      if (guest) {
-        const authToken = jwt.sign({ id: guest._id.toString() }, "VERY_SECRET", {
-          expiresIn: "180 days",
-        });
-        setCookie("brlft-auth-token", authToken, { res, req, maxAge: 31557600 / 2 });
-        res.status(200).json({ message: "Succesfully logged on", status: 200 });
-      }
+      const authToken = jwt.sign({ id: guest._id.toString() }, process.env.JWT_SECRET, {
+        expiresIn: "180 days",
+      });
+      setCookie("brlft-auth-token", authToken, { res, req, maxAge: 31557600 / 2 });
+      res.status(200).json({ message: "Succesfully logged on", status: 200 });
     } catch (e) {
-      console.error(e);
       res.status(500).json({ status: 500, message: e.message });
     }
   }

@@ -1,9 +1,10 @@
 import sgMail from "@sendgrid/mail";
 import { render } from "@react-email/components";
 import jwt from "jsonwebtoken";
-import { MongoClient, ServerApiVersion } from "mongodb";
+import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { NextApiRequest, NextApiHandler, NextApiResponse } from "next";
-import MagicLinkEmail from "../../../emails/magic";
+import { deleteCookie } from "cookies-next";
+import MagicLinkEmail from "../../../../emails/magic";
 
 export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -26,8 +27,6 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
   const sendEmail = async ({ name, email, token }) => {
     const API_KEY = process.env.SENDGRID_API_KEY;
-
-    console.log({ name, email, token, origin: req.headers.origin });
 
     const emailHtml = render(
       MagicLinkEmail({
@@ -71,7 +70,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
           timestamp,
         });
 
-        const token = jwt.sign({ id: newUser.insertedId.toString() }, "VERY_SECRET", {
+        const token = jwt.sign({ id: newUser.insertedId.toString() }, process.env.JWT_SECRET, {
           expiresIn: 15 * 60,
         });
 
@@ -82,7 +81,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
           .json({ status: 200, message: `Validation magic link send via email to ${email}` });
       }
 
-      const token = jwt.sign({ id: queriedUser._id.toString() }, "VERY_SECRET", {
+      const token = jwt.sign({ id: queriedUser._id.toString() }, process.env.JWT_SECRET, {
         expiresIn: 15 * 60,
       });
 
@@ -91,30 +90,42 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       res
         .status(200)
         .json({ status: 200, message: `Validation magic link send via email to ${email}` });
+      res.end();
     } catch (e) {
       res.status(500).json({ status: 500, message: e });
     }
-
-    // try {
-    //   const timestamp = new Date().toISOString();
-    //   const mongoResponse = await guests.updateOne(
-    //     { email },
-    //     { $set: { name, email, type, timestamp } },
-    //     { upsert: true },
-    //   );
-    //   if (mongoResponse.acknowledged) {
-    //     res
-    //       .status(200)
-    //       .json({ message: "User successfully added.", data: { ...guest, timestamp } });
-    //   }
-    // } catch (e) {
-    //   res.status(500).json({ message: "Something went wrong", error: e.message });
-    // }
   }
-  res.end();
-  // if (method === 'POST') {}
+  if (method === "GET") {
+    const guests = await getGuestsCollection();
+
+    const { cookies } = req;
+    const { "brlft-auth-token": token = "" } = cookies;
+
+    if (!token) {
+      res.status(400).json({ status: 400, message: "The request was missing token" });
+    }
+
+    try {
+      const payload = jwt.verify(token as string, process.env.JWT_SECRET);
+
+      // @ts-ignore
+      const { id } = payload;
+
+      const guest = await guests.findOne({ _id: new ObjectId(id) });
+
+      if (!guest) {
+        deleteCookie("brlft-auth-token", { req, res });
+        res.status(404).json({ status: 404, message: "Guest not found" });
+      }
+
+      res.status(200).json({ status: 200, data: guest });
+    } catch (e) {
+      res.status(500).json({ status: 500, message: e.message });
+    }
+  }
   // if (method === 'PUT') {}
   // if (method === 'DELETE') {}
+  res.end();
 };
 
 export default handler;
