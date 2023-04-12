@@ -63,6 +63,8 @@ export const GlobalStyles = createGlobalStyle`
     font-family: 'Courier New', Courier, monospace;
     color: ${({ theme }) => theme.colors.text.default};
     font-size: 1.2rem;
+    padding: 0;
+    margin: 0;
 
     @media screen and (max-width: 400px){
       font-size: 1rem;

@@ -9,12 +9,13 @@ import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { useGuest } from "../utils/hooks/useGuest";
 import { MiniPerson } from "../components/guest/mini/MiniPerson";
+import { theme } from "../styles/theme";
 
 export type Person = {
   id: string;
   name: string;
   open?: boolean;
-  type: "borrel" | "dag";
+  type: "borrel" | "dag" | "niet";
   diet?: string;
   know?: string;
   help?: string;
@@ -29,6 +30,7 @@ const RSVPPage = () => {
   } as Partial<Person>;
 
   const [people, setPeople] = useState<Partial<Person>[]>([]);
+  const [addVisible, toggleAddVisible] = useState(true);
 
   useEffect(() => {
     if (guest) {
@@ -36,21 +38,14 @@ const RSVPPage = () => {
     }
   }, [guest]);
 
-  const handleAddPerson = async (person: Partial<Person>) => {
-    console.log(person);
-    const response = await fetch("/api/guests/add", {
-      method: "POST",
-      body: JSON.stringify((({ open, ...rest }) => rest)(person)),
-    });
-    if (response.ok) {
-      const data = await response.json();
-      console.log(data);
-      await refetch();
-    }
+  const handleAddNewPerson = () => {
+    toggleAddVisible(false);
+    setPeople((prev) => [...prev, { ...defaultPerson, id: v4(), open: true }]);
   };
 
-  const handleAddNewPerson = () => {
-    setPeople((prev) => [...prev, { ...defaultPerson, id: v4(), open: true }]);
+  const handleUpdate = () => {
+    refetch();
+    toggleAddVisible(true);
   };
 
   return (
@@ -78,15 +73,28 @@ const RSVPPage = () => {
           </p>
           {people.map((p, index) => (
             <PersonForm
+              noDelete={!guest?.people?.find((gp) => gp.id === p.id)}
               key={p.id}
               initialPerson={p}
               index={index}
-              handleAddPerson={handleAddPerson}
+              guestType={guest?.type}
+              handleUpdate={handleUpdate}
             />
           ))}
-          <button type="button" onClick={handleAddNewPerson}>
-            +
-          </button>
+          {addVisible ? (
+            <button
+              style={{
+                padding: "1rem",
+                border: `2px solid ${theme.colors.secondary.default}`,
+                margin: "1rem 0",
+                borderRadius: "0.25rem",
+              }}
+              type="button"
+              onClick={handleAddNewPerson}
+            >
+              Voeg een gast toe!
+            </button>
+          ) : null}
         </Item>
       </ScreenWrapper>
     </PageLayout>

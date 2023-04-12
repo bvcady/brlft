@@ -3,6 +3,7 @@ import { render } from "@react-email/components";
 import jwt from "jsonwebtoken";
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { NextApiRequest, NextApiHandler, NextApiResponse } from "next";
+import { deleteCookie } from "cookies-next";
 import MagicLinkEmail from "../../../../emails/magic";
 
 export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -89,6 +90,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       res
         .status(200)
         .json({ status: 200, message: `Validation magic link send via email to ${email}` });
+      res.end();
     } catch (e) {
       res.status(500).json({ status: 500, message: e });
     }
@@ -112,6 +114,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const guest = await guests.findOne({ _id: new ObjectId(id) });
 
       if (!guest) {
+        deleteCookie("brlft-auth-token", { req, res });
         res.status(404).json({ status: 404, message: "Guest not found" });
       }
 

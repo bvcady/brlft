@@ -39,7 +39,8 @@ export const Form = styled.form`
     font-size: 1rem;
   }
 
-  input {
+  input,
+  textarea {
     color: ${theme.colors.secondary.default};
     outline: none;
     font-size: 1rem;
@@ -48,7 +49,8 @@ export const Form = styled.form`
   }
 
   input[type="text"],
-  input[type="email"] {
+  input[type="email"],
+  textarea {
     border: 2px solid ${theme.colors.secondary.default};
     border-radius: 0.25rem;
     :focus,

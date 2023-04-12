@@ -53,33 +53,34 @@ const InfoPage = () => {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "2rem",
+                gap: "1rem",
               }}
             >
               <h3>Hallo {guest.name}</h3>
               <p>
                 We nodigen jullie uit om ons 10 jarig samenzijn te vieren op de mooiste dag van ons
                 leven - onze trouwdag!
-                <br />
-                <br />
+              </p>
+              <p>
                 Op deze website kun je alle informatie vinden die je nodig hebt om bij onze viering
                 aanwezig te zijn. We hebben zorgvuldig op een rijtje gezet wat jullie kunnen
                 verwachten van onze bruiloft. Van de locatie tot de tijdsindeling, van dieëtwensen
                 tot of jij wilt en kunt helpen op de dag zelf.
-                <br />
-                <br />
+              </p>
+              <p>
                 We kunnen niet wachten om deze speciale dag met jullie te delen en onze liefde voor
                 elkaar te vieren. Op deze website kun je je{" "}
                 <InlineLink href="/rsvp">RSVP</InlineLink> bevestigen voor jou en doorgeven wie met
                 jou naar de dag zelf en / of de borrel komen, zodat wij, onze weddingplanner en onze
                 master of ceremony, ons goed kunnen voorbereiden.
-                <br />
-                <br />
+              </p>
+              <p>
                 Als je nog vragen hebt over onze bruiloft of deze website, aarzel dan niet om{" "}
                 <InlineLink href="/contact">contact</InlineLink> met Willemijn Sneep op te nemen. We
                 kijken er naar uit om samen met jullie een onvergetelijke dag te creëren op onze
                 trouwdag!
               </p>
+              <p>Veel liefs, Lisa van Vliet en Bob Verheij</p>
             </div>
           </Item>
         ) : null}
