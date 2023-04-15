@@ -3,16 +3,16 @@ import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FormWrapper } from "./FormWrapper";
 import { Form } from "./Styled.Form";
-import { Person } from "../../pages/rsvp";
 import { usePerson } from "../../utils/hooks/usePerson";
 import CheckMark from "../../../public/images/check.svg";
 import Progress from "../../../public/images/progress.svg";
 import { theme } from "../../styles/theme";
+import { GuestType, Person } from "../../types";
 
 interface Props {
   index: number;
   initialPerson?: Partial<Person>;
-  guestType: "borrel" | "dag";
+  guestType: GuestType;
   handleUpdate: () => void;
   noDelete?: boolean;
 }

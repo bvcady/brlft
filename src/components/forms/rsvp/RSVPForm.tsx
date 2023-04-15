@@ -3,13 +3,14 @@ import { FormEvent, useState } from "react";
 import { useLocalStorage } from "../../../utils/hooks/useLocalStorage";
 import { FormWrapper } from "../FormWrapper";
 import { Form } from "../Styled.Form";
+import { GuestType } from "../../../types";
 
 const defaultPerson = {
   name: "",
 };
 
 interface IForm {
-  type: "borrel" | "dag";
+  type: GuestType;
 }
 
 export const RSVPForm = ({ type }: IForm) => {

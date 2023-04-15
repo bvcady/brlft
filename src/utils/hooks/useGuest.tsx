@@ -1,9 +1,10 @@
 import { getCookie } from "cookies-next";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { Guest } from "../../types";
 
 export const useGuest = () => {
-  const [guest, setGuest] = useState(undefined);
+  const [guest, setGuest] = useState<Guest>();
   const [isLoading, toggleIsLoading] = useState(true);
   const [errors, setErrors] = useState("");
 
