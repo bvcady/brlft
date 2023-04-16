@@ -1,18 +1,19 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import styled from "styled-components";
+import { ThreeDots } from "react-loading-icons";
 import { FormWrapper } from "./FormWrapper";
 import { Form } from "./Styled.Form";
-import { Person } from "../../pages/rsvp";
 import { usePerson } from "../../utils/hooks/usePerson";
 import CheckMark from "../../../public/images/check.svg";
-import Progress from "../../../public/images/progress.svg";
+// import Progress from "../../../public/images/progress.svg";
 import { theme } from "../../styles/theme";
+import { GuestType, Person } from "../../types";
 
 interface Props {
   index: number;
   initialPerson?: Partial<Person>;
-  guestType: "borrel" | "dag";
+  guestType: GuestType;
   handleUpdate: () => void;
   noDelete?: boolean;
 }
@@ -66,7 +67,8 @@ export const PersonForm = ({ index, initialPerson, guestType, handleUpdate, noDe
             {saved ? (
               <CheckMark fill="white" width="1rem" />
             ) : (
-              <Progress fill={theme.colors.secondary.default} width="1rem" />
+              // <Progress fill={theme.colors.secondary.default} width="1rem" />
+              <ThreeDots speed={0.5} style={{ width: "80%" }} />
             )}
           </div>
           {isOpen ? (
@@ -95,6 +97,7 @@ export const PersonForm = ({ index, initialPerson, guestType, handleUpdate, noDe
                 />
                 <RadioInput
                   id={id}
+                  required
                   name="type"
                   label="Waar ben je bij?"
                   options={[
@@ -135,7 +138,7 @@ export const PersonForm = ({ index, initialPerson, guestType, handleUpdate, noDe
                           return { ...prev, [key]: input };
                         });
                       }}
-                      defaultValue={person.diet}
+                      defaultValue={person.know}
                     />
                   </>
                 ) : null}
@@ -261,15 +264,24 @@ const RadioGroup = styled.div`
 `;
 
 interface RadioProps {
-  id: string;
-  name: string;
-  label: string;
-  handleChange: (input: string, key: string) => void;
-  options: { value: string; label: string }[];
   defaultValue: string;
+  handleChange: (input: string, key: string) => void;
+  id: string;
+  label: string;
+  name: string;
+  options: { value: string; label: string }[];
+  required?: boolean;
 }
 
-const RadioInput = ({ id, name, label, handleChange, options, defaultValue }: RadioProps) => {
+const RadioInput = ({
+  defaultValue,
+  handleChange,
+  id,
+  label,
+  name,
+  options,
+  required,
+}: RadioProps) => {
   const [checked, setChecked] = useState(defaultValue);
 
   useEffect(() => {
@@ -280,7 +292,10 @@ const RadioInput = ({ id, name, label, handleChange, options, defaultValue }: Ra
 
   return (
     <RadioGroup>
-      <p>{label}</p>
+      <p>
+        {label}
+        {required && "*"}
+      </p>
       {options.map((opt) => (
         <label key={opt.value} htmlFor={`${id}-${opt.value}`}>
           <input

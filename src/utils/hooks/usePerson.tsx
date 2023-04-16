@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Person } from "../../pages/rsvp";
+import { Person } from "../../types";
 
 export const usePerson = () => {
   const [loading, setLoading] = useState(false);

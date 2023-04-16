@@ -10,16 +10,7 @@ import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { useGuest } from "../utils/hooks/useGuest";
 import { MiniPerson } from "../components/guest/mini/MiniPerson";
 import { theme } from "../styles/theme";
-
-export type Person = {
-  id: string;
-  name: string;
-  open?: boolean;
-  type: "borrel" | "dag" | "niet";
-  diet?: string;
-  know?: string;
-  help?: string;
-};
+import { Person } from "../types";
 
 const RSVPPage = () => {
   const { guest, isLoading, refetch } = useGuest();

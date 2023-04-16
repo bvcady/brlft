@@ -8,7 +8,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    res.status(500).json({ message: "Please provide a valid Mongo URI" });
+    return res.status(500).json({ message: "Please provide a valid Mongo URI" });
   }
 
   const getGuestsCollection = async () => {
@@ -31,7 +31,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const { token } = JSON.parse(body);
 
       if (!token) {
-        res.status(400).json({ status: 400, message: "The request was missing token" });
+        return res.status(400).json({ status: 400, message: "The request was missing token" });
       }
 
       const payload = jwt.verify(token, process.env.JWT_SECRET);
@@ -42,19 +42,19 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const guest = await guests.findOne({ _id: new ObjectId(id) });
 
       if (!guest) {
-        res.status(400).json({ message: "Guest not found", status: 400 });
+        return res.status(400).json({ message: "Guest not found", status: 400 });
       }
 
       const authToken = jwt.sign({ id: guest._id.toString() }, process.env.JWT_SECRET, {
         expiresIn: "180 days",
       });
       setCookie("brlft-auth-token", authToken, { res, req, maxAge: 31557600 / 2 });
-      res.status(200).json({ message: "Succesfully logged on", status: 200 });
+      return res.status(200).json({ message: "Succesfully logged on", status: 200 });
     } catch (e) {
-      res.status(500).json({ status: 500, message: e.message });
+      return res.status(500).json({ status: 500, message: e.message });
     }
   }
-  res.end();
+  return res.end();
   // if (method === 'GET') {}
   // if (method === 'PUT') {}
   // if (method === 'DELETE') {}

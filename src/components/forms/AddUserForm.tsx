@@ -7,19 +7,13 @@ import { Toggle } from "../toggle/Toggle";
 import { Form } from "./Styled.Form";
 import { theme } from "../../styles/theme";
 import CheckMark from "../../../public/images/check.svg";
+import { Guest, GuestType } from "../../types";
 
-interface GuestProps {
-  user: {
-    name: string;
-    email: string;
-    type: "borrel" | "dag";
-  };
-}
 interface GuestResponse {
-  status?: number;
+  data?: Guest;
   message?: string;
+  status?: number;
 }
-
 const SubmitButton = styled.button`
   margin-inline: auto;
   margin-top: 1rem;
@@ -31,8 +25,6 @@ const SubmitButton = styled.button`
   text-decoration: none;
   cursor: pointer;
 `;
-
-type GuestType = "dag" | "borrel" | undefined;
 
 export const AddUserForm = () => {
   const formRef = useRef<HTMLFormElement>();
@@ -54,14 +46,14 @@ export const AddUserForm = () => {
     }
   }, [queryType]);
 
-  const handleGuest = async ({ user }: GuestProps) => {
-    const response = await fetch("/api/guests", { method: "POST", body: JSON.stringify(user) });
+  const handleGuest = async (guest: Guest) => {
+    const response = await fetch("/api/guests", { method: "POST", body: JSON.stringify(guest) });
     const data = await response.json();
 
     const { status }: GuestResponse = data;
 
     if (status === 200) {
-      setEmailSent(user.email);
+      setEmailSent(guest.email);
     }
   };
 
@@ -80,11 +72,9 @@ export const AddUserForm = () => {
             e.preventDefault();
             if (formValid && guestType) {
               handleGuest({
-                user: {
-                  name: nameRef.current?.value,
-                  email: emailRef.current?.value,
-                  type: guestType,
-                },
+                name: nameRef.current?.value,
+                email: emailRef.current?.value,
+                type: guestType,
               });
             }
           }}

@@ -6,7 +6,6 @@ export const JaWoord = () => {
       style={{
         position: "relative",
         marginTop: "2rem",
-        padding: "2rem",
         display: "flex",
         gap: "2rem",
         alignItems: "center",

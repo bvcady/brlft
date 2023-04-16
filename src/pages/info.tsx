@@ -2,12 +2,12 @@
 import { ReactNode } from "react";
 import Link from "next/link";
 import styled from "styled-components";
+import { AddToCalendarButton } from "add-to-calendar-button-react";
 import { JaWoord } from "../components/decoration/ja-woord/JaWoord";
 import { Item } from "../layout/Item";
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { theme } from "../styles/theme";
-import { useLogInCheck } from "../utils/hooks/useLogInCheck";
 import { useGuest } from "../utils/hooks/useGuest";
 import { Spinner } from "../components/spinner/Spinner";
 
@@ -34,8 +34,7 @@ const InlineLink = ({ href, children }: ILink) => {
 };
 
 const InfoPage = () => {
-  // useLogInCheck();
-  const { guest, isLoading, refetch } = useGuest();
+  const { guest, isLoading } = useGuest();
 
   return (
     <PageLayout>
@@ -45,10 +44,26 @@ const InfoPage = () => {
 
         {guest ? (
           <Item>
-            <button type="button" onClick={refetch}>
-              refetch
-            </button>
-            <h2>4 Augustus 2023</h2>
+            <div style={{ paddingBottom: "2rem" }}>
+              <AddToCalendarButton
+                size="5"
+                hideBackground
+                hideCheckmark
+                hideIconButton
+                hideBranding
+                trigger="click"
+                language="nl"
+                buttonStyle="date"
+                listStyle="modal"
+                name="Bruiloft Lisa en Bob"
+                startDate="2023-08-04"
+                startTime={guest?.type === "dag" ? "15:00" : "20:00"}
+                options={["Apple", "Google", "Yahoo", "Microsoft365", "Outlook.com"]}
+                endTime="23:30"
+                timeZone="Europe/Amsterdam"
+                styleLight={`--date-btn-text: ${theme.colors.secondary.default}; --date-btn-text-secondary: ${theme.colors.secondary.default}; --date-btn-cal-background: ${theme.colors.secondary.default}; --date-btn-background: white; --font: "Courier New", Courier, monospace; --list-background: ${theme.colors.background.default}; --list-background-hover: ${theme.colors.accent.default}; --date-btn-shadow: unset; --date-btn-shadow-hover: unset; --btn-shadow: none; --btn-shadow-hover: none`}
+              />
+            </div>
             <div
               style={{
                 display: "flex",
