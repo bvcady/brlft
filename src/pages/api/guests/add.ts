@@ -121,6 +121,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       return res.status(500).json({ status: 500, message: e });
     }
   }
+  return res.end();
 };
 
 export default handler;

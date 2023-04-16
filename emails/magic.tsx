@@ -24,7 +24,7 @@ export const MagicLinkEmail = ({ name, origin, token }: MagicLinkEmailProps) => 
   return (
     <Html>
       <Head />
-      <Preview>{`${name}, log in met deze 'magic' link`}</Preview>
+      <Preview>{`Beste ${name}, log in met deze 'magic' link`}</Preview>
       <Body style={main}>
         <Container style={container}>
           <Img
@@ -34,12 +34,11 @@ export const MagicLinkEmail = ({ name, origin, token }: MagicLinkEmailProps) => 
           />
           <Heading style={h1}>Hoi {name}! </Heading>
           <Heading style={h2}>Je bent welkom op de bruiloft van Lisa en Bob. </Heading>
+          <Text style={{ ...text }}>Fijn dat onze uitnodiging goed bij je terecht is gekomen.</Text>
           <Text style={{ ...text }}>
-            Fijn om te zien dat onze uitnodiging goed bij je terecht is gekomen.
-          </Text>
-          <Text style={{ ...text }}>
-            Om te weten te komen wie er allemaal wel, of niet, kunnen komen naar onze bruiloft
-            willen dit graag registreren op basis van jouw email adres:
+            Door hier je email te bevestigen kun je op onze website laten weten of je wel of niet
+            kunt komen. Daarnaast kun je aangeven met wie je komt en vind je meer informatie over de
+            bruiloft zelf.
           </Text>
           <Link
             href={redirect}
@@ -52,16 +51,6 @@ export const MagicLinkEmail = ({ name, origin, token }: MagicLinkEmailProps) => 
             Klik hier!
             <i style={{ color: "#230478" }} />
           </Link>
-        </Container>
-        <Container style={container}>
-          <Text style={{ ...text }}>
-            Of vul deze code in op{" "}
-            <Link style={link} href="https://brlft.nl/validate-code">
-              onze website
-            </Link>
-            :
-          </Text>
-          <Text style={code}>{token}</Text>
         </Container>
         <Container style={container}>
           <Text
