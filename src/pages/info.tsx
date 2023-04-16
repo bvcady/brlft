@@ -20,7 +20,8 @@ const LinkWrapper = styled.span`
   text-decoration: none;
   font-family: "Courier New", Courier, monospace;
   font-weight: 700;
-  color: ${theme.colors.secondary.default};
+
+  color: ${theme.colors.main.default};
   text-transform: none;
   font-size: inherit;
 `;
@@ -59,7 +60,7 @@ const InfoPage = () => {
                 startDate="2023-08-04"
                 startTime={guest?.type === "dag" ? "15:00" : "20:00"}
                 options={["Apple", "Google", "Yahoo", "Microsoft365", "Outlook.com"]}
-                endTime="23:30"
+                endTime="23:00"
                 timeZone="Europe/Amsterdam"
                 styleLight={`--date-btn-text: ${theme.colors.secondary.default}; --date-btn-text-secondary: ${theme.colors.secondary.default}; --date-btn-cal-background: ${theme.colors.secondary.default}; --date-btn-background: white; --font: "Courier New", Courier, monospace; --list-background: ${theme.colors.background.default}; --list-background-hover: ${theme.colors.accent.default}; --date-btn-shadow: unset; --date-btn-shadow-hover: unset; --btn-shadow: none; --btn-shadow-hover: none`}
               />

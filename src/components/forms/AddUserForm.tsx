@@ -153,12 +153,27 @@ export const AddUserForm = () => {
         </Form>
       ) : null}
       {emailSent ? (
-        <div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "1rem",
+            padding: "0 2rem",
+          }}
+        >
           <img src="images/envelope.png" alt="envelope" />
           <p>
             <strong>Een email is gestuurd naar {emailSent}</strong>
           </p>
-          <p>Check je inbox en volg de instructies.</p>
+          <p>
+            Check binnen nu en 2 minuten jouw inbox en volg de instructies. Als de mail niet in jouw
+            inbox zit, kijk dan voor de zekerheid in je ongewenste mail of spam.
+            <br />
+            <br />
+            Als het aanmelden helemaal niet lukt, neem dan contact op met Bob of Lisa.
+          </p>
         </div>
       ) : null}
     </FormWrapper>
