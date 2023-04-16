@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
 import { MongoClient, ObjectId, ServerApiVersion } from "mongodb";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
-import { Person } from "../../rsvp";
+import { Person } from "../../../types";
 
 export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
