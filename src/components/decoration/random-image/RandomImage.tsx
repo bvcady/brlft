@@ -28,6 +28,7 @@ export const RandomImage = ({ style }: Props) => {
       alt=""
       style={{
         objectFit: "contain",
+        filter: "url(#displacementFilter) blur(0.5px)",
         width: "clamp(150px, 250px, 50%)",
         height: 250,
         ...style,
