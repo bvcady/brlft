@@ -11,7 +11,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    res.status(500).json({ message: "Please provide a valid Mongo URI" });
+    return res.status(500).json({ message: "Please provide a valid Mongo URI" });
   }
 
   const getGuestsCollection = async () => {
@@ -55,7 +55,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     const { name, email, type } = JSON.parse(body);
 
     if (!body || !email || !type) {
-      res.status(400).json({ status: 400, message: "The request was missing data" });
+      return res.status(400).json({ status: 400, message: "The request was missing data" });
     }
 
     try {
@@ -87,12 +87,11 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
       await sendEmail({ token, name, email });
 
-      res
+      return res
         .status(200)
         .json({ status: 200, message: `Validation magic link send via email to ${email}` });
-      res.end();
     } catch (e) {
-      res.status(500).json({ status: 500, message: e });
+      return res.status(500).json({ status: 500, message: e });
     }
   }
   if (method === "GET") {
@@ -102,7 +101,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     const { "brlft-auth-token": token = "" } = cookies;
 
     if (!token) {
-      res.status(400).json({ status: 400, message: "The request was missing token" });
+      return res.status(400).json({ status: 400, message: "The request was missing token" });
     }
 
     try {
@@ -115,17 +114,17 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
       if (!guest) {
         deleteCookie("brlft-auth-token", { req, res });
-        res.status(404).json({ status: 404, message: "Guest not found" });
+        return res.status(404).json({ status: 404, message: "Guest not found" });
       }
 
-      res.status(200).json({ status: 200, data: guest });
+      return res.status(200).json({ status: 200, data: guest });
     } catch (e) {
-      res.status(500).json({ status: 500, message: e.message });
+      return res.status(500).json({ status: 500, message: e.message });
     }
   }
   // if (method === 'PUT') {}
   // if (method === 'DELETE') {}
-  res.end();
+  return res.end();
 };
 
 export default handler;

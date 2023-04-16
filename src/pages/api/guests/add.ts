@@ -8,7 +8,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
   const uri = process.env.MONGODB_URI;
 
   if (!uri) {
-    res.status(500).json({ message: "Please provide a valid Mongo URI" });
+    return res.status(500).json({ message: "Please provide a valid Mongo URI" });
   }
 
   const getGuestsCollection = async () => {
@@ -29,13 +29,13 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     const { "brlft-auth-token": token = "" } = cookies;
 
     if (!token) {
-      res.status(400).json({ status: 400, message: "The request was missing token" });
+      return res.status(400).json({ status: 400, message: "The request was missing token" });
     }
 
     const { body } = req;
 
     if (!body) {
-      res.status(400).json({ status: 400, message: "The request was missing data" });
+      return res.status(400).json({ status: 400, message: "The request was missing data" });
     }
 
     try {
@@ -47,7 +47,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const guest = await guests.findOne({ _id: new ObjectId(id) });
 
       if (!guest) {
-        res.status(404).json({ status: 404, message: "Guest not found" });
+        return res.status(404).json({ status: 404, message: "Guest not found" });
       }
 
       const person = JSON.parse(body);
@@ -67,9 +67,9 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
       console.log(updatedGuest);
 
-      res.status(200).json({ status: 200, message: "Succesfully added guest" });
+      return res.status(200).json({ status: 200, message: "Succesfully added guest" });
     } catch (e) {
-      res.status(500).json({ status: 500, message: e });
+      return res.status(500).json({ status: 500, message: e });
     }
   }
 
@@ -80,13 +80,13 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     const { "brlft-auth-token": token = "" } = cookies;
 
     if (!token) {
-      res.status(400).json({ status: 400, message: "The request was missing token" });
+      return res.status(400).json({ status: 400, message: "The request was missing token" });
     }
 
     const { body } = req;
 
     if (!body) {
-      res.status(400).json({ status: 400, message: "The request was missing data" });
+      return res.status(400).json({ status: 400, message: "The request was missing data" });
     }
 
     try {
@@ -98,7 +98,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
       const guest = await guests.findOne({ _id: new ObjectId(id) });
 
       if (!guest) {
-        res.status(404).json({ status: 404, message: "Guest not found" });
+        return res.status(404).json({ status: 404, message: "Guest not found" });
       }
 
       const person = JSON.parse(body);
@@ -116,9 +116,9 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
       console.log(updatedGuest);
 
-      res.status(200).json({ status: 200, message: "Succesfully added guest" });
+      return res.status(200).json({ status: 200, message: "Succesfully added guest" });
     } catch (e) {
-      res.status(500).json({ status: 500, message: e });
+      return res.status(500).json({ status: 500, message: e });
     }
   }
 };
