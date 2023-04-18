@@ -20,7 +20,6 @@ const LinkWrapper = styled.span`
   text-decoration: none;
   font-family: "Courier New", Courier, monospace;
   font-weight: 700;
-
   color: ${theme.colors.main.default};
   text-transform: none;
   font-size: inherit;
@@ -100,21 +99,6 @@ const InfoPage = () => {
             </div>
           </Item>
         ) : null}
-
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: "1rem",
-          }}
-        >
-          <Link href="/rsvp">Meld je aan!</Link>
-          <Link href="/locatie">Locatie</Link>
-          <Link href="/time-table">Tijd Indeling</Link>
-          <Link href="/contact">Contact</Link>
-        </div>
       </ScreenWrapper>
     </PageLayout>
   );

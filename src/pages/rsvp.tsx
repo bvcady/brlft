@@ -58,9 +58,10 @@ const RSVPPage = () => {
           ))}
         </div>
         <Item>
-          <p>
+          <p style={{ maxWidth: "738px", margin: "0 auto" }}>
             Hier kun je aangeven met hoeveel mensen je komt. Geef ook voor jezelf aan of je er bij
-            bent.
+            bent. Kinderen zijn welkom en geef deze ook aan in het overzicht, alstublieft. Wanneer
+            je aanpassingen zijn gedaan verschijnt er een vinkje in de rechter bovenhoek.
           </p>
           {people.map((p, index) => (
             <PersonForm

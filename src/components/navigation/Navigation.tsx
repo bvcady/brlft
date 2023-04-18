@@ -134,7 +134,7 @@ export const Navigation = ({ children }: INavigation) => {
                 Meld je aan!
               </Link>
               <Link href="/locatie">Locatie</Link>
-              <Link href="/time-table">Tijd Indeling</Link>
+              <Link href="/time-table">Tijds Indeling</Link>
               <Link href="/contact">Contact</Link>
               <button
                 style={{

@@ -163,7 +163,11 @@ export const AddUserForm = () => {
             padding: "0 2rem",
           }}
         >
-          <img src="images/envelope.png" alt="envelope" />
+          <img
+            src="images/envelope.png"
+            alt="envelope"
+            style={{ filter: "url(#displacementFilter) blur(0.5px)" }}
+          />
           <p>
             <strong>Een email is gestuurd naar {emailSent}</strong>
           </p>
