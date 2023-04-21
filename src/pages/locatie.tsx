@@ -11,37 +11,11 @@ const LocatiePage = () => {
     <PageLayout>
       <ScreenWrapper>
         <Item>
-          <div
-            style={{
-              position: "relative",
-              maxWidth: "100%",
-              width: "600px",
-              minWidth: "300px",
-              aspectRatio: "1.66",
-              display: "flex",
-              overflow: "hidden",
-              borderRadius: "0.25rem",
-              justifyContent: "center",
-              alignItems: "flex-end",
-              backgroundImage:
-                'url("https://media.indebuurt.nl/dordrecht/2020/06/08125910/de-eikenhof-scaled.jpg")',
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-            }}
-          >
-            <h1
-              style={{
-                userSelect: "none",
-                transform: "translateY(.25rem)",
-                color: theme.colors.background.default,
-              }}
-            >
-              loc<i>a</i>
-              <i>t</i>ie
-            </h1>
-          </div>
+          <h1>Locatie</h1>
+          <p>
+            <strong>Hier verschijnt binnenkort meer informatie.</strong>
+          </p>
         </Item>
-        <Item />
         <Item>
           <div
             style={{
@@ -65,6 +39,26 @@ const LocatiePage = () => {
               Google Maps
             </a>
           </div>
+        </Item>
+        <Item>
+          <div
+            style={{
+              position: "relative",
+              maxWidth: "100%",
+              width: "600px",
+              minWidth: "300px",
+              aspectRatio: "1.66",
+              display: "flex",
+              overflow: "hidden",
+              borderRadius: "0.25rem",
+              justifyContent: "center",
+              alignItems: "flex-end",
+              backgroundImage:
+                'url("https://media.indebuurt.nl/dordrecht/2020/06/08125910/de-eikenhof-scaled.jpg")',
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+            }}
+          />
         </Item>
       </ScreenWrapper>
     </PageLayout>

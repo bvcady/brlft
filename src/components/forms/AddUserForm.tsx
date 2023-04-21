@@ -37,6 +37,7 @@ export const AddUserForm = () => {
   const [guestType, setGuestType] = useState<GuestType>(undefined);
   const [formValid, setFormValid] = useState(false);
   const [emailSent, setEmailSent] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const checkQueryType = queryType === "borrel" || queryType === "dag";
 
@@ -47,6 +48,7 @@ export const AddUserForm = () => {
   }, [queryType]);
 
   const handleGuest = async (guest: Guest) => {
+    setLoading(true);
     const response = await fetch("/api/guests", { method: "POST", body: JSON.stringify(guest) });
     const data = await response.json();
 
@@ -55,6 +57,7 @@ export const AddUserForm = () => {
     if (status === 200) {
       setEmailSent(guest.email);
     }
+    setLoading(false);
   };
 
   const checkValidity = () => {
@@ -138,8 +141,8 @@ export const AddUserForm = () => {
             />
           </fieldset>
 
-          <SubmitButton type="submit">
-            {guestType && formValid && !emailSent ? (
+          <SubmitButton disabled={loading} type="submit">
+            {loading && guestType && formValid && !emailSent ? (
               `Begin!`
             ) : (
               <Hearts
