@@ -1,11 +1,12 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { theme } from "../../../styles/theme";
 
 interface Props {
   name?: string;
+  notComing?: boolean;
 }
 
-const InitialsWrapper = styled.h5`
+const InitialsWrapper = styled.h5<{ notComing?: boolean }>`
   border: 2px solid ${theme.colors.main.default};
   display: flex;
   justify-content: center;
@@ -18,9 +19,14 @@ const InitialsWrapper = styled.h5`
   max-height: 2rem;
   border-radius: 1rem;
   background-color: ${theme.colors.accent.default};
+  ${({ notComing }) =>
+    notComing &&
+    css`
+      opacity: 0.5;
+    `}
 `;
 
-export const MiniPerson = ({ name = "a a" }: Props) => {
+export const MiniPerson = ({ name = "", notComing }: Props) => {
   const initials = name
     .split(" ")
     .slice(0, 2)
@@ -28,5 +34,5 @@ export const MiniPerson = ({ name = "a a" }: Props) => {
     .join("")
     .toUpperCase();
 
-  return <InitialsWrapper>{initials}</InitialsWrapper>;
+  return <InitialsWrapper {...{ notComing }}>{initials}</InitialsWrapper>;
 };
