@@ -44,7 +44,7 @@ interface IGuest {
 
 export const Guest = ({ guest }: IGuest) => {
   const noneComing =
-    !guest?.people && !guest?.people.some((pers) => pers.type === "borrel" || pers.type === "dag");
+    !guest?.people && !guest?.people?.some((pers) => pers.type === "borrel" || pers.type === "dag");
 
   return (
     <Wrapper>
