@@ -1,5 +1,6 @@
 import { MongoClient, ServerApiVersion } from "mongodb";
 import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
+import { stringify } from "csv-stringify";
 
 export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -26,9 +27,16 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     try {
       const allGuests = await guests.find().toArray();
 
-      console.log({ allGuests });
+      const csvData = stringify(
+        allGuests.reduce((acc, g) => [...acc, ...(g.people || [])], []),
+        { header: true, delimiter: ";" },
+      );
+      // Set response headers
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=allGuests.csv");
 
-      return res.status(200).json({ status: 200, data: allGuests });
+      // Send the CSV as the response
+      return res.status(200).send(csvData);
     } catch (e) {
       return res.status(500).json({ status: 500, message: e });
     }

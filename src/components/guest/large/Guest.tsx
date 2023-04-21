@@ -1,3 +1,4 @@
+/* eslint-disable no-nested-ternary */
 import styled from "styled-components";
 import { Guest as GuestProps } from "../../../types";
 import { MiniPerson } from "../mini/MiniPerson";
@@ -5,14 +6,15 @@ import { MiniPerson } from "../mini/MiniPerson";
 const Wrapper = styled.div`
   background-color: white;
   border-radius: 0.25rem;
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   font-size: 1rem;
   gap: 0.5rem;
   margin: 0 auto;
   max-width: 600px;
   padding: 1.5rem 2rem;
   width: 100%;
+  gap: 1rem;
 
   a {
     font-family: "Courier New", Courier, monospace;
@@ -20,14 +22,19 @@ const Wrapper = styled.div`
     opacity: 1;
   }
   .name-bar {
+    grid-column: 1 / span 3;
     align-items: center;
     display: flex;
     flex-flow: row wrap;
-    padding: 0.5rem 0;
-    *:not(:first-child) {
-      margin-left: auto;
-      padding: 0.25rem;
-    }
+    gap: 1rem;
+  }
+  .guests {
+    grid-column: 3 / span 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+    gap: 0.5rem;
   }
 `;
 
@@ -36,18 +43,36 @@ interface IGuest {
 }
 
 export const Guest = ({ guest }: IGuest) => {
+  const noneComing =
+    !guest?.people && !guest?.people.some((pers) => pers.type === "borrel" || pers.type === "dag");
+
   return (
     <Wrapper>
       <div className="name-bar">
         <h2>{guest.name} </h2>
         <a href={`mailto:${guest.email}`}>{guest.email}</a>
-        <p>{guest.type.toUpperCase()} gast</p>
       </div>
-      {guest.people?.length ? <p>{guest.people.length} gasten</p> : <p>Nog niet afgerond</p>}
-      <div style={{ display: "flex", gap: "0.5rem" }}>
-        {guest.people?.map((p) => (
-          <MiniPerson name={p.name} />
-        ))}
+      {!noneComing ? (
+        <p>
+          <b>{guest.type.toUpperCase()}</b>
+        </p>
+      ) : (
+        <p />
+      )}
+      <div className="guests">
+        {guest.people?.length ? (
+          <p>
+            {guest.people?.filter((p) => p.type !== "niet").length} gast
+            {guest.people?.filter((p) => p.type !== "niet").length > 1 && "en"}
+          </p>
+        ) : !guest.people?.length ? (
+          <p>Nog niet afgerond</p>
+        ) : null}
+        <div style={{ display: "flex", gap: "0.5rem" }}>
+          {guest.people?.map((p) => (
+            <MiniPerson name={p.name} notComing={p.type === "niet"} />
+          ))}
+        </div>
       </div>
     </Wrapper>
   );
