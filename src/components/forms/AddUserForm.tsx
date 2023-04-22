@@ -142,16 +142,7 @@ export const AddUserForm = () => {
           </fieldset>
 
           <SubmitButton disabled={loading} type="submit">
-            {loading && guestType && formValid && !emailSent ? (
-              `Begin!`
-            ) : (
-              <Hearts
-                width="2rem"
-                height="1rem"
-                style={{ margin: "0", padding: "0" }}
-                fill={theme.colors.secondary.default}
-              />
-            )}
+            {loading ? "..." : "Begin!"}
           </SubmitButton>
         </Form>
       ) : null}
