@@ -49,6 +49,15 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
         expiresIn: "180 days",
       });
       setCookie("brlft-auth-token", authToken, { res, req, maxAge: 31557600 / 2 });
+
+      await guests.updateOne(
+        {
+          _id: new ObjectId(id),
+        },
+        { $set: { validated: true } },
+        { upsert: true },
+      );
+
       return res.status(200).json({ message: "Succesfully logged on", status: 200 });
     } catch (e) {
       return res.status(500).json({ status: 500, message: e.message });

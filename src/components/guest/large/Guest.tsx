@@ -3,10 +3,13 @@ import styled from "styled-components";
 import { Guest as GuestProps } from "../../../types";
 import { MiniPerson } from "../mini/MiniPerson";
 
+import CheckMark from "../../../../public/images/check.svg";
+
 const Wrapper = styled.div`
   background-color: white;
   border-radius: 0.25rem;
   display: grid;
+  position: relative;
   grid-template-columns: repeat(3, 1fr);
   font-size: 1rem;
   gap: 0.5rem;
@@ -48,6 +51,23 @@ export const Guest = ({ guest }: IGuest) => {
 
   return (
     <Wrapper>
+      {guest.validated ? (
+        <div
+          style={{
+            position: "absolute",
+            top: "-0.5rem",
+            right: "0.5rem",
+            borderRadius: "1rem",
+            background: "#00D100",
+            zIndex: 2,
+            display: "flex",
+            placeContent: "center",
+            padding: "0.25rem",
+          }}
+        >
+          <CheckMark fill="white" width="1rem" />
+        </div>
+      ) : null}
       <div className="name-bar">
         <h2>{guest.name} </h2>
         <a href={`mailto:${guest.email}`}>{guest.email}</a>

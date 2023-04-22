@@ -4,6 +4,7 @@ export interface Guest {
   type: GuestType;
   timestamp?: string;
   people?: Person[];
+  validated?: boolean;
 }
 
 export type GuestType = "borrel" | "dag" | "niet";

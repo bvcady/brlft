@@ -1,7 +1,6 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/router";
 import styled from "styled-components";
-import { Hearts } from "react-loading-icons";
 import { FormWrapper } from "./FormWrapper";
 import { Toggle } from "../toggle/Toggle";
 import { Form } from "./Styled.Form";
