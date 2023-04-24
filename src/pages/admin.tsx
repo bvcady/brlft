@@ -58,11 +58,21 @@ const AdminPage = () => {
           <Item>
             <h1>For our eyes only</h1>
             <p>
-              Totaal aantal gasten:
+              Totaal aantal gasten:{" "}
               {guests?.reduce(
                 (acc, g) => acc + (g.people?.filter((p) => p.type !== "niet").length || 0),
                 0,
               )}
+              , mogelijk{" "}
+              {guests?.reduce((acc, g) => {
+                if (!g.people) {
+                  return acc + 1;
+                }
+                if (g.people?.every((p) => p.type === "niet")) {
+                  return acc;
+                }
+                return acc + (g.people?.filter((p) => p.type !== "niet").length || 0);
+              }, 0)}
             </p>
 
             <div

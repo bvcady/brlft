@@ -34,8 +34,10 @@ export const AddUserForm = () => {
   const { type: queryType = "" } = router.query;
 
   const [guestType, setGuestType] = useState<GuestType>(undefined);
+  const [guestStatus, setGuestStatus] = useState<"new" | "existing">("new");
   const [formValid, setFormValid] = useState(false);
   const [emailSent, setEmailSent] = useState("");
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const checkQueryType = queryType === "borrel" || queryType === "dag";
@@ -53,10 +55,15 @@ export const AddUserForm = () => {
 
     const { status }: GuestResponse = data;
 
-    if (status === 200) {
-      setEmailSent(guest.email);
+    if (status !== 200) {
+      setError(
+        "Er ging mogelijk iets mis met het registreren van je email adres. Check voor de zekerheid je inbox en probeer het anders nogmaals door de pagina te refreshen.",
+      );
+      return setLoading(false);
     }
-    setLoading(false);
+
+    setEmailSent(guest.email);
+    return setLoading(false);
   };
 
   const checkValidity = () => {
@@ -67,7 +74,29 @@ export const AddUserForm = () => {
 
   return (
     <FormWrapper>
-      {!emailSent ? (
+      {!queryType ? (
+        <Toggle
+          options={[
+            {
+              isActive: guestStatus === "new",
+              label: "Nieuwe Gast",
+              callback: () => {
+                setGuestType(undefined);
+                setGuestStatus("new");
+              },
+            },
+            {
+              isActive: guestStatus === "existing",
+              label: "Bestaande Gast",
+              callback: () => {
+                setGuestType("dag");
+                setGuestStatus("existing");
+              },
+            },
+          ]}
+        />
+      ) : null}
+      {!emailSent && !error ? (
         <Form
           ref={formRef}
           onSubmit={(e: FormEvent) => {
@@ -99,18 +128,20 @@ export const AddUserForm = () => {
             </div>
           ) : null}
           <fieldset name="name">
-            <legend>Wie ben je?</legend>
-            <label htmlFor="name">
-              Je naam:
-              <input
-                onBlur={checkValidity}
-                required
-                ref={nameRef}
-                type="text"
-                autoComplete="off"
-                data-lpignore="true"
-              />
-            </label>
+            <legend>{guestStatus === "new" ? "Wie ben je?" : "Welkom terug!"}</legend>
+            {guestStatus === "new" ? (
+              <label htmlFor="name">
+                Je naam:
+                <input
+                  onBlur={checkValidity}
+                  required
+                  ref={nameRef}
+                  type="text"
+                  autoComplete="off"
+                  data-lpignore="true"
+                />
+              </label>
+            ) : null}
             <label htmlFor="email">
               Je email:
               <input
@@ -122,22 +153,23 @@ export const AddUserForm = () => {
                 data-lpignore="true"
               />
             </label>
-
-            <Toggle
-              disabled={checkQueryType}
-              options={[
-                {
-                  isActive: guestType === "dag",
-                  label: "Dag Gasten",
-                  callback: () => setGuestType("dag"),
-                },
-                {
-                  isActive: guestType === "borrel",
-                  label: "Borrel Gasten",
-                  callback: () => setGuestType("borrel"),
-                },
-              ]}
-            />
+            {guestStatus === "new" ? (
+              <Toggle
+                disabled={checkQueryType}
+                options={[
+                  {
+                    isActive: guestType === "dag",
+                    label: "Dag Gasten",
+                    callback: () => setGuestType("dag"),
+                  },
+                  {
+                    isActive: guestType === "borrel",
+                    label: "Borrel Gasten",
+                    callback: () => setGuestType("borrel"),
+                  },
+                ]}
+              />
+            ) : null}
           </fieldset>
 
           <SubmitButton disabled={loading} type="submit">
@@ -145,6 +177,7 @@ export const AddUserForm = () => {
           </SubmitButton>
         </Form>
       ) : null}
+      {error ? <p>{error}</p> : null}
       {emailSent ? (
         <div
           style={{

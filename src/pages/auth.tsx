@@ -1,6 +1,7 @@
 /* eslint-disable no-console */
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { PageLayout } from "../layout/PageLayout";
 import { ScreenWrapper } from "../layout/ScreenWrapper";
 import { Loader } from "../components/loader/Loader";
@@ -36,16 +37,26 @@ const AuthPage = () => {
   return (
     <PageLayout>
       <ScreenWrapper>
-        <Item>
-          {errorMessage ? <h3>{errorMessage}</h3> : null}
-          {!errorMessage ? (
-            <Loader
-              onFinished={() => {
-                router.replace("/info");
-              }}
-            />
-          ) : null}
-        </Item>
+        {token ? (
+          <Item>
+            {errorMessage ? (
+              <>
+                <p>
+                  Er is iets mis gegaan. Het kan zijn dat de email link in de tussen tijd verlopen
+                  is.
+                </p>
+                <Link href="/">Klik hier om terug te gaan naar de aanmeld pagina.</Link>
+              </>
+            ) : null}
+            {!errorMessage ? (
+              <Loader
+                onFinished={() => {
+                  router.replace("/info");
+                }}
+              />
+            ) : null}
+          </Item>
+        ) : null}
       </ScreenWrapper>
     </PageLayout>
   );
