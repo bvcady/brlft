@@ -52,7 +52,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
 
     const { body } = req;
 
-    const { name, email, type } = JSON.parse(body);
+    const { name, email, type, guestStatus } = JSON.parse(body);
 
     if (!body || !email || !type) {
       return res.status(400).json({ status: 400, message: "The request was missing data" });
@@ -61,7 +61,11 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     try {
       const query = { email };
       const queriedUser = await guests.findOne(query);
+
       if (!queriedUser) {
+        if (guestStatus === "existing") {
+          return res.status(404).json({ status: 404, message: "Guest not found" });
+        }
         const timestamp = new Date().toISOString();
         const newUser = await guests.insertOne({
           name,
@@ -85,7 +89,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
         expiresIn: 15 * 60,
       });
 
-      await sendEmail({ token, name, email });
+      await sendEmail({ token, name: queriedUser?.name || name, email });
 
       return res
         .status(200)

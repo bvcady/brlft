@@ -2,7 +2,6 @@
 import { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import { RandomImage } from "../components/decoration/random-image/RandomImage";
-import { PersonForm } from "../components/forms/PersonForm";
 import { Spinner } from "../components/spinner/Spinner";
 import { Item } from "../layout/Item";
 import { PageLayout } from "../layout/PageLayout";
@@ -11,33 +10,32 @@ import { useGuest } from "../utils/hooks/useGuest";
 import { MiniPerson } from "../components/guest/mini/MiniPerson";
 import { theme } from "../styles/theme";
 import { Person } from "../types";
+import { Modal } from "../components/modal/Modal";
+import { PersonPreview } from "../components/guest/PersonPreview";
+import { PersonForm } from "../components/forms/PersonForm";
 
 const RSVPPage = () => {
   const { guest, isLoading, refetch } = useGuest();
 
   const defaultPerson = {
-    name: guest?.name,
     type: guest?.type,
   } as Partial<Person>;
 
   const [people, setPeople] = useState<Partial<Person>[]>([]);
-  const [addVisible, toggleAddVisible] = useState(true);
+
+  const [modalActive, toggleModalActive] = useState(false);
 
   useEffect(() => {
     if (guest) {
-      setPeople(guest.people || [{ ...defaultPerson, id: v4(), open: true }]);
+      setPeople(guest.people || []);
     }
   }, [guest]);
 
-  const handleAddNewPerson = () => {
-    toggleAddVisible(false);
-    setPeople((prev) => [...prev, { ...defaultPerson, id: v4(), open: true }]);
-  };
-
-  const handleUpdate = () => {
-    refetch();
-    toggleAddVisible(true);
-  };
+  useEffect(() => {
+    if (!modalActive) {
+      refetch().catch((e) => console.error(e));
+    }
+  }, [modalActive]);
 
   return (
     <PageLayout>
@@ -57,37 +55,50 @@ const RSVPPage = () => {
             <MiniPerson key={p.name} name={p.name} />
           ))}
         </div>
-        <Item>
+        <Item style={{ gap: "1rem" }}>
           <p style={{ maxWidth: "738px", margin: "0 auto" }}>
             Hier kun je aangeven met hoeveel mensen je komt. Geef ook voor jezelf aan of je er bij
-            bent. Kinderen zijn welkom en geef deze ook aan in het overzicht, alstublieft. Wanneer
-            je aanpassingen zijn gedaan verschijnt er een vinkje in de rechter bovenhoek.
+            bent. Kinderen zijn welkom en geef deze ook aan in het overzicht, alstublieft. Als een
+            gast correct is toegevoegd, verschijnt er een vinkje in de rechter bovenhoek.
           </p>
+
           {people.map((p, index) => (
-            <PersonForm
-              noDelete={!guest?.people?.find((gp) => gp.id === p.id)}
+            <PersonPreview
               key={p.id}
-              initialPerson={p}
+              person={p}
               index={index}
               guestType={guest?.type}
-              handleUpdate={handleUpdate}
+              refetch={refetch}
             />
           ))}
-          {addVisible ? (
-            <button
-              style={{
-                padding: "1rem",
-                border: `2px solid ${theme.colors.secondary.default}`,
-                margin: "1rem 0",
-                borderRadius: "0.25rem",
-              }}
-              type="button"
-              onClick={handleAddNewPerson}
-            >
-              Voeg een gast toe!
-            </button>
-          ) : null}
+
+          <button
+            style={{
+              padding: "1rem",
+              border: `2px solid ${theme.colors.secondary.default}`,
+              margin: "1rem 0",
+              borderRadius: "0.25rem",
+            }}
+            type="button"
+            onClick={() => toggleModalActive(true)}
+          >
+            Voeg een gast toe!
+          </button>
         </Item>
+        {modalActive ? (
+          <Modal isActive={modalActive} toggleIsActive={toggleModalActive}>
+            <PersonForm
+              noDelete
+              handleClose={async () => {
+                await refetch();
+                toggleModalActive(false);
+              }}
+              index={guest?.people?.length || 0}
+              person={{ ...defaultPerson, id: v4() }}
+              guestType={guest.type}
+            />
+          </Modal>
+        ) : null}
       </ScreenWrapper>
     </PageLayout>
   );

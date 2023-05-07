@@ -1,180 +1,141 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import { HTMLInputTypeAttribute, useEffect, useState } from "react";
 import styled from "styled-components";
-import { ThreeDots } from "react-loading-icons";
 import { FormWrapper } from "./FormWrapper";
+import { GuestType, Person } from "../../types";
+import { theme } from "../../styles/theme";
 import { Form } from "./Styled.Form";
 import { usePerson } from "../../utils/hooks/usePerson";
-import CheckMark from "../../../public/images/check.svg";
-// import Progress from "../../../public/images/progress.svg";
-import { theme } from "../../styles/theme";
-import { GuestType, Person } from "../../types";
 
-interface Props {
-  index: number;
-  initialPerson?: Partial<Person>;
+interface IPForm {
   guestType: GuestType;
-  handleUpdate: () => void;
+  person: Partial<Person>;
+  index: number;
+  handleClose: () => void;
   noDelete?: boolean;
 }
 
-export const PersonForm = ({ index, initialPerson, guestType, handleUpdate, noDelete }: Props) => {
-  const [person, setPerson] = useState<Partial<Person>>(initialPerson);
-  const [isOpen, toggleIsOpen] = useState(initialPerson.open);
-  const [saved, setSaved] = useState(true);
-
-  const { id } = initialPerson;
-
+export const PersonForm = ({ index, guestType, noDelete, handleClose, ...props }: IPForm) => {
+  const [person, setPerson] = useState(props.person);
+  const [error, setError] = useState("");
+  const { id } = person;
   const { add, remove, loading } = usePerson();
 
+  useEffect(() => {
+    console.log("Person changed", person);
+  }, [person]);
+
   const handleAddPerson = async () => {
-    const response = await add(person);
-    if (response.ok) {
-      toggleIsOpen(false);
-      setSaved(true);
-      handleUpdate();
+    const res = await add(person);
+    if (res?.status !== 200) {
+      return setError("Something went wrong... please try again.");
     }
+    setError("");
+    return handleClose();
   };
 
   const handleRemovePerson = async () => {
-    const response = await remove(person);
-    if (response.ok) {
-      handleUpdate();
+    const res = await remove(person);
+    if (res?.status !== 200) {
+      return setError("Something went wrong... please try again.");
     }
+    setError("");
+    return handleClose();
   };
 
-  console.log(guestType);
-
   return (
-    <div>
-      {person ? (
-        <FormWrapper>
+    <FormWrapper>
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleAddPerson();
+        }}
+      >
+        {error ? <p>{error}</p> : null}
+        <fieldset name="name">
+          <legend>
+            Gast {index + 1} {person.name ? `(${person.name})` : ""}
+          </legend>
+          <Input
+            required
+            id={id}
+            name="name"
+            label="Naam"
+            handleChange={(input: string, key: string) => {
+              setPerson((prev) => {
+                return { ...prev, [key]: input };
+              });
+            }}
+            defaultValue={props.person.name}
+          />
+          <RadioInput
+            id={id}
+            required
+            name="type"
+            label="Waar ben je bij?"
+            options={[
+              { value: "dag", label: "Dag!" },
+              { value: "borrel", label: "Borrel!" },
+              { value: "niet", label: "Ik kom helaas niet..." },
+            ].filter((opt) => !(opt.value === "dag" && guestType === "borrel"))}
+            defaultValue={person.type}
+            handleChange={(input: string, key: string) => {
+              setPerson((prev) => {
+                return { ...prev, [key]: input };
+              });
+            }}
+          />
+          {person?.type !== "niet" ? (
+            <>
+              <Input
+                id={id}
+                name="diet"
+                label="Diëetwensen"
+                handleChange={(input: string, key: string) => {
+                  setPerson((prev) => {
+                    return { ...prev, [key]: input };
+                  });
+                }}
+                defaultValue={person.diet}
+              />
+              <Input
+                id={id}
+                type="text-area"
+                name="know"
+                label="Hoe ken je de bruid of bruidegom?"
+                handleChange={(input: string, key: string) => {
+                  setPerson((prev) => {
+                    return { ...prev, [key]: input };
+                  });
+                }}
+                defaultValue={person.know}
+              />
+            </>
+          ) : null}
           <div
             style={{
-              position: "absolute",
-              top: "1rem",
-              right: "1rem",
-              borderRadius: "1rem",
-              background: saved ? "#00D100" : "#ddd",
-              zIndex: 2,
+              padding: "1rem",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              width: "1.5rem",
-              height: "1.5rem",
+              gap: "1rem",
             }}
           >
-            {saved ? (
-              <CheckMark fill="white" width="1rem" />
-            ) : (
-              // <Progress fill={theme.colors.secondary.default} width="1rem" />
-              <ThreeDots speed={0.5} style={{ width: "80%" }} />
-            )}
-          </div>
-          {isOpen ? (
-            <Form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleAddPerson();
-              }}
-            >
-              <fieldset name="name">
-                <legend>
-                  Gast {index + 1} ({person.name})
-                </legend>
-                <Input
-                  required
-                  id={id}
-                  name="name"
-                  label="Naam"
-                  handleChange={(input: string, key: string) => {
-                    setSaved(false);
-                    setPerson((prev) => {
-                      return { ...prev, [key]: input };
-                    });
-                  }}
-                  defaultValue={person.name}
-                />
-                <RadioInput
-                  id={id}
-                  required
-                  name="type"
-                  label="Waar ben je bij?"
-                  options={[
-                    { value: "dag", label: "Dag!" },
-                    { value: "borrel", label: "Borrel!" },
-                    { value: "niet", label: "Ik kom helaas niet..." },
-                  ].filter((opt) => !(opt.value === "dag" && guestType === "borrel"))}
-                  defaultValue={person.type}
-                  handleChange={(input: string, key: string) => {
-                    setSaved(false);
-                    setPerson((prev) => {
-                      return { ...prev, [key]: input };
-                    });
-                  }}
-                />
-                {person?.type !== "niet" ? (
-                  <>
-                    <Input
-                      id={id}
-                      name="diet"
-                      label="Diëetwensen"
-                      handleChange={(input: string, key: string) => {
-                        setSaved(false);
-                        setPerson((prev) => {
-                          return { ...prev, [key]: input };
-                        });
-                      }}
-                      defaultValue={person.diet}
-                    />
-                    <Input
-                      id={id}
-                      type="text-area"
-                      name="know"
-                      label="Hoe ken je de bruid of bruidegom?"
-                      handleChange={(input: string, key: string) => {
-                        setSaved(false);
-                        setPerson((prev) => {
-                          return { ...prev, [key]: input };
-                        });
-                      }}
-                      defaultValue={person.know}
-                    />
-                  </>
-                ) : null}
-                <div
-                  style={{
-                    padding: "1rem",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    gap: "1rem",
-                  }}
-                >
-                  <button disabled={loading} type="submit">
-                    {loading ? "..." : "Opslaan"}
-                  </button>
-                  <button type="button" onClick={() => toggleIsOpen(false)}>
-                    Sluiten
-                  </button>
-                  <button disabled={noDelete} type="button" onClick={handleRemovePerson}>
-                    Verwijderen
-                  </button>
-                </div>
-              </fieldset>
-            </Form>
-          ) : null}
-          {!isOpen ? (
-            <>
-              <h3>{person.name}</h3>
-              <button type="button" onClick={() => toggleIsOpen(true)}>
-                open
+            <button disabled={loading} type="submit">
+              {loading ? "..." : "Opslaan"}
+            </button>
+            {!noDelete ? (
+              <button disabled={loading} type="button" onClick={handleRemovePerson}>
+                Verwijderen
               </button>
-            </>
-          ) : null}
-        </FormWrapper>
-      ) : null}
-    </div>
+            ) : null}
+            <button disabled={loading} type="button" onClick={handleClose}>
+              Sluiten
+            </button>
+          </div>
+        </fieldset>
+      </Form>
+    </FormWrapper>
   );
 };
 

@@ -4,6 +4,12 @@ export const GlobalStyles = createGlobalStyle`
   * {
     /* font-family: Arial, Helvetica, sans-serif; */
     box-sizing: border-box;
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+  }
+
+  *::-webkit-scrollbar {
+  display: none;
   }
 
   @font-face {

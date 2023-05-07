@@ -49,11 +49,22 @@ export const AddUserForm = () => {
   }, [queryType]);
 
   const handleGuest = async (guest: Guest) => {
+    console.log("attempting to save");
     setLoading(true);
-    const response = await fetch("/api/guests", { method: "POST", body: JSON.stringify(guest) });
+    const response = await fetch("/api/guests", {
+      method: "POST",
+      body: JSON.stringify({ ...guest, guestStatus }),
+    });
     const data = await response.json();
 
-    const { status }: GuestResponse = data;
+    const { status = 400 }: GuestResponse = data;
+
+    if (status === 404) {
+      setError(
+        "Er ging mogelijk iets mis met het ophalen van jouw gegevens. Check voor de zekerheid je inbox en probeer het anders nogmaals door de pagina te refreshen.",
+      );
+      return setLoading(false);
+    }
 
     if (status !== 200) {
       setError(
@@ -74,7 +85,7 @@ export const AddUserForm = () => {
 
   return (
     <FormWrapper>
-      {!queryType ? (
+      {!queryType && !emailSent ? (
         <Toggle
           options={[
             {
@@ -104,7 +115,7 @@ export const AddUserForm = () => {
             if (formValid && guestType) {
               handleGuest({
                 name: nameRef.current?.value,
-                email: emailRef.current?.value,
+                email: emailRef.current?.value.toLocaleLowerCase(),
                 type: guestType,
               });
             }
@@ -175,6 +186,12 @@ export const AddUserForm = () => {
           <SubmitButton disabled={loading} type="submit">
             {loading ? "..." : "Begin!"}
           </SubmitButton>
+          {loading ? (
+            <p style={{ margin: "1rem 0" }}>
+              {`Mocht deze knop langer dan 30 seconden '...' laten zien, check dan voor de zekerheid
+              toch je inbox.`}
+            </p>
+          ) : null}
         </Form>
       ) : null}
       {error ? <p>{error}</p> : null}
@@ -186,7 +203,7 @@ export const AddUserForm = () => {
             justifyContent: "center",
             alignItems: "center",
             gap: "1rem",
-            padding: "0 2rem",
+            padding: "1rem 2rem",
           }}
         >
           <img

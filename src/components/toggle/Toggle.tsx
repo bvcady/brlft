@@ -42,6 +42,12 @@ const ToggleButton = styled.button<{ isActive?: boolean }>`
   }
 
   :hover {
+    @media (width >= 500px) {
+      background-color: ${({ theme }) => theme.colors.accent.default};
+    }
+  }
+
+  :active {
     background-color: ${({ theme }) => theme.colors.accent.default};
   }
 
