@@ -86,11 +86,15 @@ export const Guest = ({ guest }: IGuest) => {
             {guest.people?.filter((p) => p.type !== "niet").length > 1 && "en"}
           </p>
         ) : !guest.people?.length ? (
-          <p>Nog niet afgerond</p>
+          guest?.validated ? (
+            <p>Nog geen gasten toegevoegd</p>
+          ) : (
+            <p>Mail nog niet geopend</p>
+          )
         ) : null}
         <div style={{ display: "flex", gap: "0.5rem" }}>
           {guest.people?.map((p) => (
-            <MiniPerson name={p.name} notComing={p.type === "niet"} />
+            <MiniPerson key={p.name} name={p.name} notComing={p.type === "niet"} />
           ))}
         </div>
       </div>

@@ -62,7 +62,7 @@ export const MagicLinkEmail = ({ name, origin, token }: MagicLinkEmailProps) => 
             Als je niet probeerde in te loggen, dan kun je deze mail veilig negeren.
           </Text>
           <Text style={footer}>
-            <Link href="https://notion.so" target="_blank" style={{ ...link }}>
+            <Link href="https://brlft.nl" target="_blank" style={{ ...link }}>
               brlft.nl
             </Link>
             , voor het plannen van een bruiloft

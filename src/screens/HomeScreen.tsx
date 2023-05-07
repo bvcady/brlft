@@ -1,5 +1,5 @@
 import { getCookie } from "cookies-next";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 import { ScreenWrapper } from "../layout/ScreenWrapper";
@@ -7,10 +7,13 @@ import { RandomImage } from "../components/decoration/random-image/RandomImage";
 import { AddUserForm } from "../components/forms/AddUserForm";
 
 import { Item } from "../layout/Item";
+import { Modal } from "../components/modal/Modal";
 
 export const HomeScreen = () => {
   const router = useRouter();
   const authToken = getCookie("brlft-auth-token");
+
+  const [modalActive, toggleModalActive] = useState(false);
 
   useEffect(() => {
     if (authToken) {
@@ -31,12 +34,18 @@ export const HomeScreen = () => {
             ? "Wij horen graag of jij hier bij kunt zijn."
             : `Wij horen graag of jij
           bij ${type === "dag" ? `deze dag` : `de borrel`} aanwezig kan zijn.`}{" "}
-          Vul hieronder je gegevens om aan te geven of je komt.
+          Klik hier onder om je registreren als gebruiker. Daarna kun je door de instructies te
+          volgen aangeven of, en met wie, je komt.
         </p>
+        <button type="button" onClick={() => toggleModalActive(true)}>
+          Klik hier!
+        </button>
       </Item>
-      <Item>
-        <AddUserForm />
-      </Item>
+      {modalActive ? (
+        <Modal isActive={modalActive} toggleIsActive={toggleModalActive}>
+          <AddUserForm />
+        </Modal>
+      ) : null}
     </ScreenWrapper>
   );
 };

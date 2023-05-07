@@ -1,27 +1,44 @@
-import { ReactNode, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
+import { CSSProperties, ReactNode, useEffect, useRef, useState } from "react";
+import styled, { css } from "styled-components";
 import { theme } from "../../styles/theme";
 
 interface IFormWrapper {
   children?: ReactNode;
+  style?: CSSProperties;
+  notInModal?: boolean;
 }
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ notInModal?: boolean }>`
   align-items: center;
   backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255);
   border-radius: 0.5rem;
-  padding: 3rem 1rem;
+  padding: 2rem 1rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  height: 100%;
-  overflow: hidden;
+  /* height: fit-content; */
+  overflow-y: scroll;
+  overflow-x: hidden;
   position: relative;
   width: clamp(300px, 738px, 100vw);
+  box-shadow: 0 0 1rem 0 rgba(0, 0, 0, 0.1);
 
-  @media screen and (max-width: 738px) {
+  @media (width <= 738px) {
     border-radius: 0;
+  }
+
+  @media (width <= 500px) {
+    ${({ notInModal }) =>
+      notInModal
+        ? css`
+            border-radius: 0;
+          `
+        : css`
+            border-top-right-radius: 1rem;
+            border-top-left-radius: 1rem;
+          `}
+    padding-bottom: 2rem;
   }
 
   h3 {
@@ -39,7 +56,7 @@ type Shape = {
   rotation: number;
 };
 
-export const FormWrapper = ({ children }: IFormWrapper) => {
+export const FormWrapper = ({ notInModal, children, style }: IFormWrapper) => {
   const [bgShapes, setBGShapes] = useState<Shape[]>([]);
 
   const wrapperRef = useRef<HTMLDivElement>();
@@ -66,10 +83,7 @@ export const FormWrapper = ({ children }: IFormWrapper) => {
   }, [wrapperRef]);
 
   return (
-    <Wrapper
-      ref={wrapperRef}
-      style={{ position: "relative", marginTop: "2rem", overflow: "hidden" }}
-    >
+    <Wrapper notInModal={notInModal} ref={wrapperRef} style={{ position: "relative", ...style }}>
       {children}
       {bgShapes.map((s) => (
         <div

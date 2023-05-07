@@ -1,8 +1,21 @@
 import { CSSProperties, useEffect, useState } from "react";
+import styled from "styled-components";
 
 interface Props {
   style?: CSSProperties;
 }
+
+const Image = styled.img`
+  object-fit: contain;
+  filter: url(#displacementFilter) blur(0.5px);
+  width: clamp(150px, 250px, 50%);
+  height: 250px;
+
+  @media (width <= 500px) {
+    margin: -1rem 0;
+    height: 200px;
+  }
+`;
 
 export const RandomImage = ({ style }: Props) => {
   const images = [
@@ -23,14 +36,10 @@ export const RandomImage = ({ style }: Props) => {
 
   if (!image) return null;
   return (
-    <img
+    <Image
       src={`images/${image}`}
       alt=""
       style={{
-        objectFit: "contain",
-        filter: "url(#displacementFilter) blur(0.5px)",
-        width: "clamp(150px, 250px, 50%)",
-        height: 250,
         ...style,
       }}
     />
