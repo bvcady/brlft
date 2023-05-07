@@ -27,10 +27,15 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     try {
       const allGuests = await guests.find().toArray();
 
-      const csvData = stringify(
-        allGuests.reduce((acc, g) => [...acc, ...(g.people || [])], []),
-        { header: true, delimiter: ";" },
-      );
+      const reducedData = allGuests.reduce((acc, g) => [...acc, ...(g.people || [])], []);
+      console.log(reducedData);
+      const csvData = stringify(reducedData, {
+        columns: ["name", "type", "diet", "know"],
+        header: true,
+        quoted: true,
+        delimiter: ";",
+      });
+
       // Set response headers
       res.setHeader("Content-Type", "text/csv");
       res.setHeader("Content-Disposition", "attachment; filename=allGuests.csv");

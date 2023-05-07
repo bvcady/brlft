@@ -188,8 +188,8 @@ export const AddUserForm = () => {
           </SubmitButton>
           {loading ? (
             <p style={{ margin: "1rem 0" }}>
-              Mocht deze knop langer dan 30 seconden '...' laten zien, check dan voor de zekerheid
-              toch je inbox.
+              {`Mocht deze knop langer dan 30 seconden '...' laten zien, check dan voor de zekerheid
+              toch je inbox.`}
             </p>
           ) : null}
         </Form>
