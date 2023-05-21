@@ -64,6 +64,27 @@ const InfoPage = () => {
                 styleLight={`--date-btn-text: ${theme.colors.secondary.default}; --date-btn-text-secondary: ${theme.colors.secondary.default}; --date-btn-cal-background: ${theme.colors.secondary.default}; --date-btn-background: white; --font: "Courier New", Courier, monospace; --list-background: ${theme.colors.background.default}; --list-background-hover: ${theme.colors.accent.default}; --date-btn-shadow: unset; --date-btn-shadow-hover: unset; --btn-shadow: none; --btn-shadow-hover: none`}
               />
             </div>
+            {!guest?.people?.length ? (
+              <div
+                style={{
+                  padding: "2rem",
+                  borderRadius: "0.5rem",
+                  marginBottom: "2rem",
+                  background: theme.colors.accent.default,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.5rem",
+                }}
+              >
+                <h2>Let op! Je bent nog niet klaar :)</h2>
+                <p>
+                  Voeg onder het kopje <InlineLink href="/rsvp">{`'Meld je aan'`}</InlineLink> toe
+                  met wie je komt, ook als je alleen bent. Dit helpt ons beter de bruiloft en de
+                  borrel plannen.
+                </p>
+              </div>
+            ) : null}
+
             <div
               style={{
                 display: "flex",
@@ -71,7 +92,7 @@ const InfoPage = () => {
                 gap: "1rem",
               }}
             >
-              <h3>Hallo {guest.name}</h3>
+              <h2>Hallo {guest.name}</h2>
               <p>
                 We nodigen jullie uit om ons 10 jarig samenzijn te vieren op de mooiste dag van ons
                 leven - onze trouwdag!
