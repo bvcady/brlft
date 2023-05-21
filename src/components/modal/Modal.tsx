@@ -1,8 +1,6 @@
 import { createPortal } from "react-dom";
 import { Dispatch, ReactNode, useEffect } from "react";
-import styled from "styled-components";
 import * as Styled from "./Modal.styled";
-import { theme } from "../../styles/theme";
 import { CloseButton } from "../buttons/Buttons.styled";
 import useWindowDimensions from "../../utils/hooks/useWindowDimensions";
 

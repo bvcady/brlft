@@ -23,7 +23,7 @@ export const PersonPreview = ({ index, guestType, person, refetch }: Props) => {
 
   return (
     <>
-      <FormWrapper notInModal style={{ maxWidth: "400px" }}>
+      <FormWrapper notInModal style={{ maxWidth: "400px", overflow: "hidden" }}>
         <div
           style={{
             position: "absolute",
@@ -41,12 +41,10 @@ export const PersonPreview = ({ index, guestType, person, refetch }: Props) => {
         >
           <CheckMark fill="white" width="1rem" />
         </div>
-        <>
-          <h3>{person.name}</h3>
-          <button type="button" onClick={() => toggleModalIsOpen(true)}>
-            open
-          </button>
-        </>
+        <h3>{person.name}</h3>
+        <button style={{ padding: 0 }} type="button" onClick={() => toggleModalIsOpen(true)}>
+          open
+        </button>
       </FormWrapper>
       {modalIsOpen ? (
         <Modal isActive={modalIsOpen} toggleIsActive={toggleModalIsOpen}>

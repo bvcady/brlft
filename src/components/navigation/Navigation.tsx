@@ -138,6 +138,7 @@ export const Navigation = ({ children }: INavigation) => {
               <Link href="/contact">Contact</Link>
               <button
                 style={{
+                  padding: 0,
                   color: "#cc3300",
                   marginLeft: "auto",
                   paddingLeft: "2rem",

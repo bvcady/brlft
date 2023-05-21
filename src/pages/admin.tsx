@@ -9,6 +9,7 @@ import { useAllGuests } from "../utils/hooks/useAllGuests";
 import { Guest } from "../components/guest/large/Guest";
 import { theme } from "../styles/theme";
 import { useDownload } from "../utils/hooks/useDownload";
+import { SortButton } from "../components/buttons/SortButton";
 
 const AdminPage = () => {
   const adminList = [
@@ -22,7 +23,7 @@ const AdminPage = () => {
 
   const { guests } = useAllGuests();
   const { download, loading } = useDownload();
-  const [sortValue, setSortValue] = useState("");
+  const [sortValue, setSortValue] = useState("recent");
   const [sortOrder, setSortOrder] = useState(-1);
 
   useEffect(() => {
@@ -52,7 +53,7 @@ const AdminPage = () => {
 
     return sortOrder;
   });
-
+  const sortProps = { sortValue, setSortValue, sortOrder, setSortOrder };
   return (
     <PageLayout>
       <ScreenWrapper>
@@ -81,82 +82,35 @@ const AdminPage = () => {
               display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
               overflow: "hidden",
-              gap: "1rem",
+              columnGap: "0.5rem",
+              rowGap: "0.25rem",
               padding: "1rem",
               background: "white",
               borderRadius: "0.25rem",
               margin: "1rem auto",
               width: "100%",
-              maxWidth: "738px",
+              maxWidth: "600px",
               flexFlow: "row wrap",
             }}
           >
             <p style={{ gridColumn: "1 / span 3" }}>Sorteer gasten:</p>
-            <button
-              onClick={() => setSortValue("type")}
-              type="button"
-              style={{
-                color:
-                  sortValue === "type" ? theme.colors.main.default : theme.colors.secondary.default,
-              }}
-            >
+            <SortButton {...{ ...sortProps }} name="type">
               type
-            </button>
-            <button
-              onClick={() => setSortValue("name")}
-              type="button"
-              style={{
-                color:
-                  sortValue === "name" ? theme.colors.main.default : theme.colors.secondary.default,
-              }}
-            >
+            </SortButton>
+            <SortButton {...{ ...sortProps }} name="name">
               naam
-            </button>
-            <button
-              onClick={() => setSortValue("email")}
-              type="button"
-              style={{
-                color:
-                  sortValue === "email"
-                    ? theme.colors.main.default
-                    : theme.colors.secondary.default,
-              }}
-            >
+            </SortButton>
+            <SortButton {...{ ...sortProps }} name="email">
               mail geopend
-            </button>
-            <button
-              onClick={() => setSortValue("people")}
-              type="button"
-              style={{
-                color:
-                  sortValue === "people"
-                    ? theme.colors.main.default
-                    : theme.colors.secondary.default,
-              }}
-            >
+            </SortButton>
+            <SortButton {...{ ...sortProps }} name="people">
               wel/niet
-            </button>
-            <button
-              onClick={() => setSortValue("")}
-              type="button"
-              style={{
-                color:
-                  sortValue === "" ? theme.colors.main.default : theme.colors.secondary.default,
-              }}
-            >
+            </SortButton>
+            <SortButton {...{ ...sortProps }} name="recent">
               recent
-            </button>
+            </SortButton>
             <button
-              onClick={() => setSortOrder((prev) => prev * -1)}
-              type="button"
-              style={{
-                color: theme.colors.secondary.default,
-              }}
-            >
-              reverse order
-            </button>
-            <button
-              style={{ gridColumn: "1 / span 3" }}
+              style={{ gridColumn: "1 / span 3", marginTop: "1rem", marginLeft: "auto" }}
               type="button"
               disabled={loading}
               onClick={() => {

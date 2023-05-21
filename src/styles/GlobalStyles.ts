@@ -59,6 +59,11 @@ export const GlobalStyles = createGlobalStyle`
     }
     transition: all 0.3s ease;
   }
+
+  button {
+    padding: 0.5rem;
+  }
+
   img {
     user-select: none;
     -webkit-user-drag: none;
