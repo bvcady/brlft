@@ -26,7 +26,7 @@ export const handler: NextApiHandler = async (req: NextApiRequest, res: NextApiR
     try {
       const allGuests = await guests.find().toArray();
 
-      console.log({ allGuests });
+      // console.log({ allGuests });
 
       return res.status(200).json({ status: 200, data: allGuests });
     } catch (e) {

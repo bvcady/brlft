@@ -10,7 +10,7 @@ export const Backdrop = styled.div<{ innerHeight?: number }>`
   justify-content: flex-start;
   padding-top: 10rem;
   align-items: center;
-  backdrop-filter: blur(3px);
+  backdrop-filter: blur(4px) grayscale(1);
   gap: 1rem;
   height: var(--innerHeight);
 
