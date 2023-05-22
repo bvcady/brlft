@@ -78,7 +78,7 @@ export const PersonForm = ({ index, guestType, noDelete, handleClose, ...props }
               { value: "borrel", label: "Borrel!" },
               { value: "niet", label: "Ik kom helaas niet..." },
             ].filter((opt) => !(opt.value === "dag" && guestType === "borrel"))}
-            defaultValue={person.type}
+            defaultValue={person?.type}
             handleChange={(input: string, key: string) => {
               setPerson((prev) => {
                 return { ...prev, [key]: input };

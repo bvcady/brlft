@@ -95,7 +95,7 @@ const RSVPPage = () => {
               }}
               index={guest?.people?.length || 0}
               person={{ ...defaultPerson, id: v4() }}
-              guestType={guest.type}
+              guestType={guest?.type}
             />
           </Modal>
         ) : null}
