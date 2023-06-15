@@ -17,7 +17,6 @@ const Wrapper = styled.div<{ notInModal?: boolean }>`
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  /* height: fit-content; */
   overflow-y: scroll;
   overflow-x: hidden;
   position: relative;
@@ -47,6 +46,8 @@ const Wrapper = styled.div<{ notInModal?: boolean }>`
   * {
     z-index: 1;
   }
+
+  height: fit-content;
 `;
 
 type Shape = {
@@ -85,24 +86,26 @@ export const FormWrapper = ({ notInModal, children, style }: IFormWrapper) => {
   return (
     <Wrapper notInModal={notInModal} ref={wrapperRef} style={{ position: "relative", ...style }}>
       {children}
-      {bgShapes.map((s) => (
-        <div
-          key={`${s.x}-${s.y}`}
-          style={{
-            position: "absolute",
-            top: s.y,
-            left: s.x,
-            filter: "url(#displacementFilter) blur(2px)",
-            borderRadius: `${s.borders[0]}% ${s.borders[1]}% ${s.borders[2]}% ${s.borders[3]}%`,
-            transform: `rotate(${s.rotation}deg)`,
-            width: 100,
-            height: 100,
-            opacity: 0.75,
-            backgroundColor: theme.colors.accent.default,
-            zIndex: -1,
-          }}
-        />
-      ))}
+      <div style={{ position: "absolute", inset: 0, overflow: "hidden", zIndex: -1 }}>
+        {bgShapes.map((s) => (
+          <div
+            key={`${s.x}-${s.y}`}
+            style={{
+              position: "absolute",
+              top: s.y,
+              left: s.x,
+              filter: "url(#displacementFilter) blur(2px)",
+              borderRadius: `${s.borders[0]}% ${s.borders[1]}% ${s.borders[2]}% ${s.borders[3]}%`,
+              transform: `rotate(${s.rotation}deg)`,
+              width: 100,
+              height: 100,
+              opacity: 0.75,
+              backgroundColor: theme.colors.accent.default,
+              zIndex: -1,
+            }}
+          />
+        ))}
+      </div>
     </Wrapper>
   );
 };

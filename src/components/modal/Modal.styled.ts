@@ -2,7 +2,8 @@ import styled from "styled-components";
 import { CloseButton } from "../buttons/Buttons.styled";
 
 export const Backdrop = styled.div<{ innerHeight?: number }>`
-  --innerHeight: ${({ innerHeight }) => innerHeight || "100vh"};
+  --innerHeight: 100dvh;
+  /* --innerHeight: ${({ innerHeight }) => innerHeight || "100dvh"}; */
   position: fixed;
   inset: 0 0 0 0;
   display: flex;
@@ -39,11 +40,12 @@ export const Content = styled.div`
   flex-flow: column;
   align-items: center;
   gap: 2rem;
+  overflow-y: scroll;
 
   @media (width <= 500px) {
     margin-top: auto;
     animation: moveIn ease-out 0.5s;
-    max-height: 66vh;
+    max-height: 66dvh;
   }
 
   @keyframes moveIn {
