@@ -44,7 +44,7 @@ const LocatiePage = () => {
             ambiance van de Eikenhof.
             <br />
             <br />
-            Ook veel dank aan Corrie en Ton.
+            Ook veel dank aan Corrie en Freek.
             <br />
             <br />
             <em>
