@@ -100,8 +100,8 @@ const InfoPage = () => {
               <p>
                 Op deze website kun je alle informatie vinden die je nodig hebt om bij onze viering
                 aanwezig te zijn. We hebben zorgvuldig op een rijtje gezet wat jullie kunnen
-                verwachten van onze bruiloft. Van de locatie tot de tijdsindeling, van dieëtwensen
-                tot of jij wilt en kunt helpen op de dag zelf.
+                verwachten van onze bruiloft. Van de locatie tot de time table, van dieëtwensen tot
+                het aanmelden van jouw plus 1, of 2.
               </p>
               <p>
                 We kunnen niet wachten om deze speciale dag met jullie te delen en onze liefde voor
