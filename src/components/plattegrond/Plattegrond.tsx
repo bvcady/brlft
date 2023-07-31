@@ -134,9 +134,9 @@ export const Plattegrond = () => {
       <LabeledArea
         {...{ mobile, setCurrentHighlight }}
         area="Jeu de Boules"
-        startX={2}
-        spanX={4}
-        startY={9}
+        startX={4}
+        spanX={2}
+        startY={11}
         spanY={1}
       />
       <LabeledArea
@@ -204,15 +204,15 @@ export const Plattegrond = () => {
         borderColor={theme.colors.main.default}
         startX={2}
         spanX={4}
-        startY={10}
+        startY={9}
         spanY={2}
       />
       <LabeledArea
         {...{ mobile, setCurrentHighlight }}
         area="Photobooth"
-        startX={3}
+        startX={4}
         spanX={2}
-        startY={14}
+        startY={12}
         spanY={1}
       />
       <LabeledArea

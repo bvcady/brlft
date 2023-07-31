@@ -54,12 +54,21 @@ const LocatiePage = () => {
           <Plattegrond />
         </Item>
         <Item>
+          <p>
+            Parkeren kan gemakkelijk bij Parkeerplaats Sportpark FC Dordrecht. Parkeer vooral{" "}
+            <strong>niet</strong> in de straten rondom de locatie om overlast te verkomen. Wanneer
+            je via de N3 aankomt kun het gemakkelijkst via de Krommedijk aanrijden.
+            <br />
+            <br />
+            <em>Verder kun je hier zien hoe je van de parkeerplaats kunt lopen naar de locatie:</em>
+          </p>
           <div
             style={{
               position: "relative",
               maxWidth: "100%",
               width: "600px",
               minWidth: "300px",
+              marginTop: "2rem",
               aspectRatio: "1.66",
               display: "flex",
               overflow: "hidden",
@@ -72,9 +81,7 @@ const LocatiePage = () => {
               backgroundPosition: "center",
             }}
           >
-            <a href="https://www.google.com/maps/dir//De+Eikenhof,+Dubbeldamseweg+Zuid+362,+3312+KT+Dordrecht/@51.8001174,4.6158151,12z/data=!4m8!4m7!1m0!1m5!1m1!1s0x47c428df47c3165d:0x68e31f9b2018855e!2m2!1d4.6858375!2d51.8001292">
-              Google Maps
-            </a>
+            <a href="https://goo.gl/maps/kBwWVNoc4VyTZ3ib7">Google Maps</a>
           </div>
         </Item>
       </ScreenWrapper>
