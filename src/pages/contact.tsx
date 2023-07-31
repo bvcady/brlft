@@ -12,13 +12,20 @@ const ContactPage = () => {
         <Item>
           <h1>Contact</h1>
           <p>
-            <strong>Hier verschijnt binnenkort meer informatie.</strong>
+            <strong>Willemijn Sneep</strong> heeft in aanloop naar de bruiloft informatie gedeel via
+            het email adres waarmee je bent aangemeld. Mocht je toch meer vragen hebben, stuur haar
+            graag een mailtje.
+            <br />
+            <br />
+            Informatie voor de planning en parkeren kun je vinden op de andere paginas van deze
+            website.
           </p>
         </Item>
 
         <Item>
-          <p>In de tussen tijd:</p>
-          <a href="mailto:willemijn_sneep@hotmail.com">Stuur Willemijn Sneep een mailtje!</a>
+          <p>Mail</p>
+          <br />
+          <a href="mailto:willemijn_sneep@hotmail.com">Willemijn Sneep.</a>
         </Item>
       </ScreenWrapper>
     </PageLayout>
